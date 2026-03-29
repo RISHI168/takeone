@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TakeOne - Cinematic Storyboard (Light Ivory)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-deep: #FFFFF0;
+            --bg-panel: rgba(255, 255, 255, 0.7);
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-glow: #00e5ff;
+            --accent-neon-orange: #ff4d00;
+            --accent-neon-blue: #00e5ff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #52525b;
+            --text-tertiary: #a1a1aa;
+            --status-success: #00e5ff;
+            --status-warning: #ffbd00;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 77, 0, 0.03) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .glass-panel {
+            background: var(--bg-panel);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+        .border-neon {
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.05);
+        }
+        .card-cinematic {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .card-cinematic:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-neon-blue);
+            box-shadow: 0 10px 25px -5px rgba(0, 229, 255, 0.15), 0 8px 10px -6px rgba(0, 229, 255, 0.1);
+        }
+        .btn-neon-orange {
+            background: linear-gradient(135deg, #ff4d00 0%, #ff8800 100%);
+            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.25);
+            color: white;
+        }
+        .btn-neon-orange:hover {
+            box-shadow: 0 6px 20px rgba(255, 77, 0, 0.4);
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+        .drag-handle {
+            cursor: grab;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .active-tab {
+            border-bottom: 2px solid var(--accent-neon-blue);
+            color: var(--accent-neon-blue);
+            font-weight: 600;
+        }
+        .inactive-tab {
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+        }
+        .inactive-tab:hover {
+            color: var(--text-primary);
+        }
+        .sub-nav-active {
+            background-color: rgba(0, 229, 255, 0.08);
+            color: #00acc1;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            font-weight: 600;
+        }
+        .sub-nav-inactive {
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+        }
+        .sub-nav-inactive:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden text-sm bg-[var(--bg-deep)] text-[var(--text-primary)]">
+<header class="h-16 border-b border-black/5 bg-white/60 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-[var(--accent-neon-blue)]">
+<span class="material-symbols-outlined text-3xl drop-shadow-[0_0_2px_rgba(0,229,255,0.4)]">movie_edit</span>
+<span class="font-display font-bold text-lg tracking-tight text-black">TAKEONE</span>
+</div>
+<div class="h-6 w-px bg-black/10 mx-2"></div>
+<div>
+<h1 class="font-medium text-black tracking-wide">Cold Brew Coffee Demo</h1>
+<div class="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+<span>Instagram Reels (9:16)</span>
+<span class="w-1 h-1 rounded-full bg-[var(--text-tertiary)]"></span>
+<span>Last saved 2m ago</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 bg-white/80 p-1 rounded-lg border border-black/5 shadow-sm">
+<div class="px-3 py-1.5 rounded text-[var(--text-secondary)] hover:text-black hover:bg-black/5 cursor-pointer transition-colors">Script</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded bg-[var(--accent-neon-blue)]/10 text-[#008ba3] font-bold border border-[var(--accent-neon-blue)]/20">Storyboard</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded text-[var(--text-tertiary)] hover:text-black transition-colors">Visuals</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded text-[var(--text-tertiary)] hover:text-black transition-colors">Edit</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-gray-100 rounded-full p-1 border border-gray-200 shadow-inner">
+<button class="w-6 h-6 rounded-full bg-white shadow-sm text-amber-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">light_mode</span>
+</button>
+<button class="w-6 h-6 rounded-full text-gray-400 hover:text-gray-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">dark_mode</span>
+</button>
+</div>
+<button class="w-8 h-8 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-gray-50 transition-colors hover:border-[var(--accent-neon-blue)] hover:text-[var(--accent-neon-blue)] shadow-sm text-gray-500">
+<span class="material-symbols-outlined text-[18px]">undo</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-gray-50 transition-colors hover:border-[var(--accent-neon-blue)] hover:text-[var(--accent-neon-blue)] shadow-sm text-gray-500">
+<span class="material-symbols-outlined text-[18px]">redo</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#ff4d00] to-[#ff9100] flex items-center justify-center text-xs font-bold border border-white/20 text-white shadow-[0_2px_8px_rgba(255,77,0,0.3)]">
+                    SJ
+                </div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[var(--accent-neon-blue)] rounded-full blur-[120px] opacity-[0.03] pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[20%] w-[600px] h-[600px] bg-[var(--accent-neon-orange)] rounded-full blur-[140px] opacity-[0.02] pointer-events-none"></div>
+<aside class="w-16 border-r border-black/5 bg-white/40 backdrop-blur-sm flex flex-col items-center py-6 gap-6 shrink-0 z-10 shadow-[2px_0_10px_rgba(0,0,0,0.02)]">
+<button class="w-10 h-10 rounded-lg bg-white border border-black/5 hover:border-[var(--accent-neon-blue)] hover:bg-[var(--accent-neon-blue)]/5 hover:text-[#00acc1] text-[var(--text-secondary)] flex items-center justify-center transition-all group relative shadow-sm" title="Add Shot">
+<span class="material-symbols-outlined">add_box</span>
+<span class="absolute left-12 bg-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-black/10 text-[var(--accent-neon-blue)] shadow-lg z-50">Add Shot</span>
+</button>
+<button class="w-10 h-10 rounded-lg hover:bg-white/60 text-[var(--text-secondary)] hover:text-black flex items-center justify-center transition-colors group relative">
+<span class="material-symbols-outlined">splitscreen</span>
+<span class="absolute left-12 bg-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-black/10 text-black shadow-lg z-50">Split Shot</span>
+</button>
+<button class="w-10 h-10 rounded-lg hover:bg-white/60 text-[var(--text-secondary)] hover:text-black flex items-center justify-center transition-colors group relative">
+<span class="material-symbols-outlined">merge_type</span>
+<span class="absolute left-12 bg-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-black/10 text-black shadow-lg z-50">Merge Shots</span>
+</button>
+<div class="h-px w-8 bg-black/10"></div>
+<button class="w-10 h-10 rounded-lg hover:bg-white/60 text-[var(--text-secondary)] hover:text-black flex items-center justify-center transition-colors group relative">
+<span class="material-symbols-outlined">image</span>
+<span class="absolute left-12 bg-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-black/10 text-black shadow-lg z-50">Upload Ref</span>
+</button>
+</aside>
+<div class="flex-1 relative bg-transparent grid-bg overflow-y-auto overflow-x-hidden p-8 z-0">
+<div class="flex items-center justify-between mb-8 sticky top-0 z-10 glass-panel p-4 rounded-xl">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-semibold text-black tracking-wide">Storyboard Sequence</h2>
+<span class="bg-black/5 text-[var(--text-secondary)] px-2.5 py-0.5 rounded text-xs border border-black/5 font-medium">6 Shots</span>
+<span class="bg-black/5 text-[var(--text-secondary)] px-2.5 py-0.5 rounded text-xs border border-black/5 font-medium">Total: 32.0s</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded hover:bg-black/5 text-[var(--text-secondary)] hover:text-black transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="p-2 rounded hover:bg-black/5 text-[var(--text-secondary)] hover:text-black transition-colors">
+<span class="material-symbols-outlined">view_list</span>
+</button>
+<div class="h-4 w-px bg-black/10 mx-1"></div>
+<div class="relative group">
+<input class="w-24 accent-[var(--accent-neon-blue)] h-1 bg-black/10 rounded-lg appearance-none cursor-pointer" max="150" min="50" type="range" value="100"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-20">
+<div class="group card-cinematic rounded-xl p-4 relative flex flex-col gap-3">
+<div class="absolute top-0 left-0 w-full h-[3px] bg-[var(--accent-neon-blue)] rounded-t-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_2px_8px_rgba(0,229,255,0.4)]"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-gray-50 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] shadow-sm">01</span>
+<span class="text-xs font-bold tracking-wide text-[#00acc1] bg-[var(--accent-neon-blue)]/5 border border-[var(--accent-neon-blue)]/20 px-2 py-0.5 rounded">HOOK</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] transition-colors"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] drag-handle transition-colors"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors shadow-inner">
+<img alt="Coffee Sketch" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV1vx84n_aF4AbUKvetYRP4EYhoJYXBNewKnx5i_m6FZ2qCeu3kFitY9tmGuhGWC7c7mEPXeZmT8fAIN3BFdosTp4R1cEt9_-lJfC3zWd6vJ7sdDr0uT0QwmJdEXLJEpy7yPuN2rCaA6a_rXPAXSuJ8ZGCOsdO-hmSMolS2KRDscPg6bk1elx_ivUP0ckevGEtvMNCeGj4EoipylUaZ0Xwn45H7xg7IGWDGmzM-YZ0zd3tCi8DJWZgu1f1gwPUGaLa21EcmKskNw"/>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Extreme Close-Up</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Macro</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_6px_rgba(0,229,255,0.3)]">3.2s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2">
+                            Extreme close-up of dark coffee grounds in a glass jar. Timer visible in soft focus background. Morning light streaming from left.
+                        </p>
+<div class="p-2 bg-gray-50/50 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-semibold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Ever wonder why your coffee tastes bitter?"</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>Cut</span>
+</div>
+</div>
+</div>
+<div class="group card-cinematic rounded-xl p-4 relative flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-gray-50 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] shadow-sm">02</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] transition-colors"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] drag-handle transition-colors"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors flex shadow-inner">
+<div class="w-1/2 h-full border-r border-white/20 relative">
+<img alt="Hot Coffee" class="w-full h-full object-cover opacity-80 grayscale mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFdmAGtxNvZ25n_bHc_ciY8SUaxq0hFDvXk1ExUXbtI5IXmEUDS-MpTY804w9wvdNWt5g9WbFGe4KP8ctSepDEAjBy2dqz0BXEmVZ8VtUrAGAnhgV14WdjuWfqVCzQ8gy2DNy3xYjoEP-sL2CHxzeUriKB1ODYyOYR0pxiacv5HjPRr7gUZZ_iPKG9lkueBKPE7z_nhO7MgrBJgYasFIMGtVhwd6ef4z1-5jUvaBHHy296Gj9VtWpiDm_qA_8SKepwWsl_ZxF4hg"/>
+<div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs bg-black/40 backdrop-blur-[1px]">HOT</div>
+</div>
+<div class="w-1/2 h-full relative">
+<img alt="Cold Brew" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDHmgVT9Pe0-c3MLsgbG2a7KyEGZn8ExPJzIhWjWOxqNRMJteQM1mOKxVQ5eNrwtyk5GYqm8McyZ3D47gO7FTBzY6OfovIQYGCG4Jq4-1juxI3xiVHESzcLRV7GRiVhAH4qP1QOypaFFxjpll3ZQqBC3sTPgu-kOvucgicnF8eVhLu21AqetZDY-Pgrk9E9aVLyUGMTOiCqvNH8ur-0x-LcOplX_pJRRVWNIicspBUXPfJYkolLDfumF-eUS98QbJhPsxrJI42nw"/>
+<div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs bg-black/20 backdrop-blur-[1px]">COLD</div>
+</div>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Split Screen</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Comparison</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_6px_rgba(0,229,255,0.3)]">6.5s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2">
+                            Split screen: hot brew (dark/steamy/chaotic) vs cold brew (light/refreshing/calm). Visual contrast emphasized.
+                        </p>
+<div class="p-2 bg-gray-50/50 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-semibold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Traditional heat burns the flavor. Cold brew extracts the soul."</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs">
+<span class="material-symbols-outlined text-[14px]">blur_on</span>
+<span>Dissolve (0.5s)</span>
+</div>
+</div>
+</div>
+<div class="group card-cinematic rounded-xl p-4 relative flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-gray-50 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] shadow-sm">03</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] transition-colors"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-black text-[var(--text-tertiary)] drag-handle transition-colors"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-50 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors shadow-inner">
+<div class="absolute inset-0 bg-white/40 flex flex-col items-center justify-center gap-2">
+<div class="w-8 h-8 border-2 border-[var(--accent-neon-blue)] border-t-transparent rounded-full animate-spin shadow-[0_0_10px_rgba(0,229,255,0.2)]"></div>
+<span class="text-[10px] text-[var(--accent-neon-blue)] font-bold tracking-wide animate-pulse">REFINING COMPOSITION...</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2">
+                            Medium shot of water being poured over grounds. Slow motion (60fps). Water droplets catching the light.
+                        </p>
+<div class="p-2 bg-gray-50/50 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-semibold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Just add water and time."</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>Cut</span>
+</div>
+</div>
+</div>
+<div class="group card-cinematic border border-[var(--status-warning)]/30 rounded-xl p-4 relative flex flex-col gap-3 shadow-[0_4px_10px_rgba(245,158,11,0.05)] hover:shadow-[0_8px_20px_rgba(245,158,11,0.1)] hover:border-[var(--status-warning)]">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-gray-50 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] shadow-sm">04</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-[var(--status-warning)] animate-pulse" title="Inconsistent Style">warning</span>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--status-warning)]/50 transition-colors shadow-inner">
+<img alt="Pouring" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_FQrhbNjZzwwIrYPwMbj37qGemhlmOg_yhF0FGBokhGG0Wcc07N-1YDiRphEFf28GjtqEDh0Bx3WI7qPtXRF1AqA3d4_rbEMI2Kq8JhIw4wN44d_K0LBHNiW4tk9u6eMdleQYv6l0Tqom5j6PA7YWcHVr4acBa4h3_hge_TRNO2d7B_GSgfI1j7M5dshpizraq-K3VGHTG35KPAHb_HeoZqnaAdB493CAPIh6NNK1B54m2i-3dWrIXwfU74moWw2DbpSW3vusaw"/>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Wide Shot</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-black border border-black/5 shadow-sm font-medium">Eye Level</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_6px_rgba(0,229,255,0.3)]">4.0s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2">
+                           Time-lapse of the jar in fridge. Lighting changes from day to night to day.
+                       </p>
+<div class="p-2 bg-gray-50/50 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-semibold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Let it steep for 12 hours while you sleep."</p>
+</div>
+</div>
+<button class="w-full mt-auto py-1.5 rounded bg-[var(--status-warning)]/10 text-orange-600 border border-[var(--status-warning)]/30 text-xs font-bold hover:bg-[var(--status-warning)]/20 transition-colors flex items-center justify-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+                        Auto-Fix Lighting Style
+                   </button>
+</div>
+<div class="border-2 border-dashed border-black/10 rounded-xl p-4 flex flex-col items-center justify-center gap-3 text-[var(--text-tertiary)] hover:text-[var(--accent-neon-blue)] hover:border-[var(--accent-neon-blue)] hover:bg-[var(--accent-neon-blue)]/5 transition-all cursor-pointer min-h-[300px] group bg-white/20">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_circle</span>
+<span class="text-sm font-medium">Add Shot 07</span>
+</div>
+</div>
+</div>
+<aside class="w-80 border-l border-black/5 bg-white/80 backdrop-blur-xl flex flex-col shrink-0 z-20 shadow-[-5px_0_25px_rgba(0,0,0,0.03)]">
+<div class="h-14 flex items-stretch px-0 border-b border-black/5">
+<button class="flex-1 font-medium text-sm flex items-center justify-center transition-all inactive-tab border-r border-black/5 bg-gray-50/50">
+        Visual Intelligence
+    </button>
+<button class="flex-1 font-medium text-sm flex items-center justify-center transition-all active-tab relative bg-white">
+        Asset Library
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--accent-neon-orange)] shadow-[0_0_8px_var(--accent-neon-orange)] animate-pulse"></span>
+</button>
+</div>
+<div class="p-5 flex-1 overflow-y-auto space-y-6">
+<div class="bg-gray-100 rounded-lg p-1 flex gap-1 border border-black/5">
+<button class="flex-1 py-1.5 text-xs font-medium rounded sub-nav-inactive transition-all">AI-generated</button>
+<button class="flex-1 py-1.5 text-xs font-medium rounded sub-nav-active transition-all shadow-sm">Manual Uploads</button>
+</div>
+<div class="space-y-4">
+<div class="border-2 border-dashed border-[var(--accent-neon-blue)] bg-[var(--accent-neon-blue)]/5 rounded-xl p-6 flex flex-col items-center justify-center text-center gap-3 cursor-pointer hover:bg-[var(--accent-neon-blue)]/10 transition-colors group relative overflow-hidden">
+<div class="w-12 h-12 rounded-full bg-white border border-[var(--accent-neon-blue)]/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
+<span class="material-symbols-outlined text-[var(--accent-neon-blue)] text-2xl">cloud_upload</span>
+</div>
+<div>
+<h4 class="text-black text-sm font-semibold">Drop Assets Here</h4>
+<p class="text-[10px] text-[var(--text-secondary)] mt-1">Supports JPG, PNG, WEBP</p>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[var(--accent-neon-blue)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+</div>
+<div class="flex items-center justify-between mt-6">
+<h3 class="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">Recent Uploads</h3>
+<button class="text-[#00acc1] text-xs hover:underline flex items-center gap-1 font-medium">
+            View All <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="group relative aspect-square bg-gray-100 rounded-lg overflow-hidden border border-black/5 hover:border-[var(--accent-neon-blue)] transition-all cursor-pointer shadow-sm">
+<img alt="Coffee Beans" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV1vx84n_aF4AbUKvetYRP4EYhoJYXBNewKnx5i_m6FZ2qCeu3kFitY9tmGuhGWC7c7mEPXeZmT8fAIN3BFdosTp4R1cEt9_-lJfC3zWd6vJ7sdDr0uT0QwmJdEXLJEpy7yPuN2rCaA6a_rXPAXSuJ8ZGCOsdO-hmSMolS2KRDscPg6bk1elx_ivUP0ckevGEtvMNCeGj4EoipylUaZ0Xwn45H7xg7IGWDGmzM-YZ0zd3tCi8DJWZgu1f1gwPUGaLa21EcmKskNw"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white drop-shadow-md">add_circle</span>
+</div>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded px-1.5 py-0.5 text-[9px] text-black border border-black/5 shadow-sm font-bold">JPG</div>
+</div>
+<div class="group relative aspect-square bg-gray-100 rounded-lg overflow-hidden border border-black/5 hover:border-[var(--accent-neon-blue)] transition-all cursor-pointer shadow-sm">
+<img alt="Cafe Interior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFdmAGtxNvZ25n_bHc_ciY8SUaxq0hFDvXk1ExUXbtI5IXmEUDS-MpTY804w9wvdNWt5g9WbFGe4KP8ctSepDEAjBy2dqz0BXEmVZ8VtUrAGAnhgV14WdjuWfqVCzQ8gy2DNy3xYjoEP-sL2CHxzeUriKB1ODYyOYR0pxiacv5HjPRr7gUZZ_iPKG9lkueBKPE7z_nhO7MgrBJgYasFIMGtVhwd6ef4z1-5jUvaBHHy296Gj9VtWpiDm_qA_8SKepwWsl_ZxF4hg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white drop-shadow-md">add_circle</span>
+</div>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded px-1.5 py-0.5 text-[9px] text-black border border-black/5 shadow-sm font-bold">PNG</div>
+</div>
+<div class="group relative aspect-square bg-gray-100 rounded-lg overflow-hidden border border-black/5 hover:border-[var(--accent-neon-blue)] transition-all cursor-pointer shadow-sm">
+<img alt="Barista Hands" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDHmgVT9Pe0-c3MLsgbG2a7KyEGZn8ExPJzIhWjWOxqNRMJteQM1mOKxVQ5eNrwtyk5GYqm8McyZ3D47gO7FTBzY6OfovIQYGCG4Jq4-1juxI3xiVHESzcLRV7GRiVhAH4qP1QOypaFFxjpll3ZQqBC3sTPgu-kOvucgicnF8eVhLu21AqetZDY-Pgrk9E9aVLyUGMTOiCqvNH8ur-0x-LcOplX_pJRRVWNIicspBUXPfJYkolLDfumF-eUS98QbJhPsxrJI42nw"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white drop-shadow-md">add_circle</span>
+</div>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded px-1.5 py-0.5 text-[9px] text-black border border-black/5 shadow-sm font-bold">WEBP</div>
+</div>
+<div class="group relative aspect-square bg-gray-50 rounded-lg overflow-hidden border border-black/10 hover:border-[var(--accent-neon-blue)] transition-all cursor-pointer border-dashed hover:bg-white shadow-inner">
+<div class="w-full h-full flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[var(--accent-neon-blue)]">drive_folder_upload</span>
+<span class="text-[10px] text-[var(--text-secondary)] font-medium">Browse Files</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent"></div>
+<div class="bg-gradient-to-br from-white to-gray-50 p-4 rounded-xl border border-[var(--accent-neon-blue)]/20 relative overflow-hidden shadow-sm">
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-5xl text-[var(--accent-neon-blue)]">folder_special</span>
+</div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-9 h-9 rounded-lg bg-[var(--accent-neon-blue)] flex items-center justify-center shrink-0 shadow-[0_4px_10px_rgba(0,229,255,0.3)] text-white">
+<span class="material-symbols-outlined text-[20px]">cloud_sync</span>
+</div>
+<div>
+<h5 class="text-xs font-bold text-black mb-1">Cloud Sync</h5>
+<p class="text-[11px] text-[var(--text-secondary)] leading-tight mb-2">
+                    Assets are synced across your team workspace.
+                </p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-0.5 rounded bg-[var(--status-success)]/10 border border-[var(--status-success)]/20 text-[#00acc1] font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00acc1] animate-pulse"></span> Active</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-5 border-t border-black/5 space-y-3 bg-white/60 backdrop-blur-xl">
+<button class="w-full py-3 btn-neon-orange rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+                    Upload More Assets
+                </button>
+<button class="w-full py-2.5 bg-white hover:bg-gray-50 border border-black/10 text-[var(--text-secondary)] hover:text-black rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px] group-hover:animate-spin text-[var(--accent-neon-blue)]">autorenew</span>
+                    Generate with AI
+                </button>
+</div>
+</aside>
+</main>
+</body></html>

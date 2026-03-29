@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Project Setup - TakeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-dark: #0f172a;
+            --surface-dark: #1e293b;
+            --surface-hover: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --neon-blue: #3b82f6;
+            --neon-magenta: #d946ef;
+            --neon-orange: #f97316;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: var(--text-main);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }.glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.7);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+        }
+        .selected-card {
+            background: rgba(59, 130, 246, 0.1) !important;
+            border: 1px solid rgba(59, 130, 246, 0.5) !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.25) !important;
+        }.grain-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }.modal-glow-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(217, 70, 239, 0.15) 35%, rgba(2, 6, 23, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(60px);
+        }.step-active {
+            color: var(--neon-orange);
+            border-color: rgba(249, 115, 22, 0.5);
+            background: rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.2);
+        }.input-glass {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+            transition: all 0.2s;
+        }
+        .input-glass:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            background: rgba(15, 23, 42, 0.8);
+        }
+        .toggle-checkbox:checked {
+            background-color: var(--neon-blue);
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: var(--neon-blue);
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex relative bg-[#020617]">
+<div class="flex-1 flex flex-col h-full w-full absolute inset-0 filter blur-md brightness-[0.4] z-0 pointer-events-none select-none">
+<div class="flex h-full">
+<aside class="w-64 bg-[#0B1121] border-r border-slate-800/50 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-blue-600 to-purple-600"></div>
+<span class="font-bold text-lg tracking-tight text-white">TakeOne</span>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<div class="flex items-center gap-3 px-4 py-3 bg-slate-800/50 rounded-lg text-white border border-slate-700/50">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</div>
+</nav>
+</aside>
+<main class="flex-1 bg-[#020617] p-8 grid grid-cols-3 gap-6">
+<div class="h-48 rounded-xl bg-slate-900/50 border border-slate-800"></div>
+<div class="h-48 rounded-xl bg-slate-900/50 border border-slate-800"></div>
+<div class="h-48 rounded-xl bg-slate-900/50 border border-slate-800"></div>
+</main>
+</div>
+</div>
+<div class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-5xl glass-panel rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+<div class="modal-glow-bg"></div>
+<div class="grain-overlay"></div>
+<div class="relative z-10 flex items-center justify-between px-8 py-5 border-b border-white/10 bg-black/20">
+<div>
+<h2 class="text-xl font-semibold text-white tracking-wide">New Project</h2>
+<p class="text-sm text-slate-400">Configure your AI creative workflow</p>
+</div>
+<button class="text-slate-400 hover:text-white transition-colors p-1 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="relative z-10 flex-1 overflow-y-auto p-8 space-y-10 scrollbar-hide">
+<section>
+<div class="flex items-center gap-3 mb-5">
+<span class="flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold border transition-colors step-active">1</span>
+<h3 class="text-sm font-semibold text-slate-200 uppercase tracking-widest">Select Template</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="group relative cursor-pointer glass-card p-5 rounded-xl selected-card">
+<div class="absolute top-3 right-3 opacity-100 text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]">
+<span class="material-symbols-outlined text-[20px] fill-1">check_circle</span>
+</div>
+<div class="h-24 w-full bg-slate-900/50 rounded-lg mb-4 flex items-center justify-center overflow-hidden border border-white/5">
+<div class="w-full h-full bg-gradient-to-br from-slate-800/50 to-slate-900/80 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-blue-400 transition-colors">shopping_bag</span>
+</div>
+</div>
+<h4 class="font-medium text-white mb-1.5 tracking-wide">Product Demo</h4>
+<p class="text-xs text-slate-400 leading-relaxed">Showcase features and benefits in 30s.</p>
+</div>
+<div class="group relative cursor-pointer glass-card p-5 rounded-xl hover:bg-slate-800/50">
+<div class="h-24 w-full bg-slate-900/50 rounded-lg mb-4 flex items-center justify-center overflow-hidden border border-white/5">
+<div class="w-full h-full bg-gradient-to-br from-slate-800/50 to-slate-900/80 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-slate-500 group-hover:text-slate-300">school</span>
+</div>
+</div>
+<h4 class="font-medium text-slate-200 group-hover:text-white mb-1.5 tracking-wide">Tutorial / How-To</h4>
+<p class="text-xs text-slate-500 group-hover:text-slate-400 leading-relaxed">Step-by-step guide for viewers.</p>
+</div>
+<div class="group relative cursor-pointer glass-card p-5 rounded-xl hover:bg-slate-800/50">
+<div class="h-24 w-full bg-slate-900/50 rounded-lg mb-4 flex items-center justify-center overflow-hidden border border-white/5">
+<div class="w-full h-full bg-gradient-to-br from-slate-800/50 to-slate-900/80 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-slate-500 group-hover:text-slate-300">campaign</span>
+</div>
+</div>
+<h4 class="font-medium text-slate-200 group-hover:text-white mb-1.5 tracking-wide">Brand Awareness</h4>
+<p class="text-xs text-slate-500 group-hover:text-slate-400 leading-relaxed">High energy, mood-based content.</p>
+</div>
+<div class="group relative cursor-pointer border border-dashed border-slate-700/60 rounded-xl p-5 hover:bg-slate-800/30 transition-all flex flex-col items-center justify-center text-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-slate-500 mb-2 group-hover:text-white transition-colors">add</span>
+<h4 class="font-medium text-slate-400 group-hover:text-white mb-1 tracking-wide">Start from Scratch</h4>
+<p class="text-xs text-slate-600 group-hover:text-slate-500">No template</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-3 mb-5">
+<span class="flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold border border-slate-700 bg-slate-800 text-slate-400">2</span>
+<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-widest">Project Details</h3>
+</div>
+<div class="grid grid-cols-1 gap-6 pl-2">
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wide">Project Title</label>
+<input class="w-full input-glass rounded-lg px-4 py-3 placeholder-slate-600 focus:ring-0 outline-none" placeholder="e.g. Summer Campaign 2024" type="text" value="New Coffee Machine Demo"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wide">What would you like to create?</label>
+<textarea class="w-full input-glass rounded-lg px-4 py-3 placeholder-slate-600 focus:ring-0 outline-none resize-none" placeholder="Describe your video idea..." rows="3"></textarea>
+<div class="flex justify-end mt-2">
+<span class="text-[10px] text-slate-600 font-mono">0/500 CHARS</span>
+</div>
+</div>
+</div>
+</section>
+<section class="relative rounded-2xl border border-white/10 bg-gradient-to-b from-slate-800/40 to-slate-900/60 p-6 overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+<div class="flex items-center justify-between mb-6 relative z-10">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold border step-active">2.5</span>
+<div>
+<h3 class="text-sm font-bold text-white uppercase tracking-widest">Apply Brand Kit</h3>
+<p class="text-[10px] text-slate-400 mt-0.5">Maintain consistency across your content</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-black/30 px-3 py-1.5 rounded-full border border-white/5">
+<span class="text-xs text-slate-300 font-medium">Preview Style</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer toggle-checkbox" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600 toggle-label shadow-inner"></div>
+</label>
+</div>
+</div>
+<div class="relative group z-10">
+<button class="absolute -left-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-blue-600 hover:border-blue-500 transition-all opacity-0 group-hover:opacity-100 shadow-lg -translate-x-1/2 disabled:opacity-0 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-blue-600 hover:border-blue-500 transition-all opacity-0 group-hover:opacity-100 shadow-lg translate-x-1/2">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<div class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scrollbar-hide snap-x">
+<div class="snap-start shrink-0 w-48 p-4 rounded-xl border border-dashed border-slate-600/50 hover:border-slate-400 bg-slate-800/30 hover:bg-slate-800/60 cursor-pointer transition-all flex flex-col items-center justify-center text-center gap-3 h-48 backdrop-blur-sm group/card">
+<div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-400 group-hover/card:text-white group-hover/card:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-2xl">auto_awesome</span>
+</div>
+<div>
+<h4 class="text-sm font-medium text-slate-300 group-hover/card:text-white">General AI Style</h4>
+<p class="text-[10px] text-slate-500 mt-1">No specific branding</p>
+</div>
+</div>
+<div class="snap-start shrink-0 w-48 p-1 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.3)] h-48 relative overflow-hidden transform scale-[1.02]">
+<div class="absolute inset-[1px] bg-[#0f172a] rounded-[11px] overflow-hidden flex flex-col">
+<div class="absolute top-2 right-2 z-10 text-blue-400 drop-shadow-[0_0_5px_rgba(59,130,246,0.8)]">
+<span class="material-symbols-outlined text-xl fill-1">check_circle</span>
+</div>
+<div class="p-4 flex flex-col h-full bg-gradient-to-b from-blue-900/20 to-transparent">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-black shadow-lg shadow-white/10">
+<span class="material-symbols-outlined text-xl text-blue-600">diamond</span>
+</div>
+<div>
+<span class="text-xs text-blue-300 font-mono tracking-tighter uppercase">Default</span>
+<span class="block text-sm font-bold text-white truncate leading-tight">Main Brand</span>
+</div>
+</div>
+<div class="mt-auto space-y-3">
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)] ring-2 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)] ring-2 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-slate-900 shadow-sm ring-2 ring-white/10"></div>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="text-[9px] text-blue-100 font-medium bg-blue-500/20 border border-blue-500/30 px-2 py-1 rounded">Inter</span>
+<span class="text-[9px] text-blue-100 font-medium bg-blue-500/20 border border-blue-500/30 px-2 py-1 rounded">Roboto</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="snap-start shrink-0 w-48 p-4 rounded-xl border border-white/10 bg-slate-800/40 hover:bg-slate-700/40 hover:border-white/20 cursor-pointer transition-all h-48 relative backdrop-blur-sm group/card">
+<div class="flex flex-col h-full">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm shadow-sm">
+                                            CX
+                                        </div>
+<span class="text-sm font-bold text-slate-200 truncate group-hover/card:text-white">Client X</span>
+</div>
+<div class="mt-auto space-y-3">
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-orange-500 ring-1 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-teal-600 ring-1 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-white ring-1 ring-white/10"></div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-[9px] text-slate-400 font-medium bg-slate-900/50 border border-slate-700 px-2 py-1 rounded">Montserrat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="snap-start shrink-0 w-48 p-4 rounded-xl border border-white/10 bg-slate-800/40 hover:bg-slate-700/40 hover:border-white/20 cursor-pointer transition-all h-48 relative backdrop-blur-sm group/card">
+<div class="flex flex-col h-full">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-pink-500/20">
+<span class="material-symbols-outlined text-lg">mic</span>
+</div>
+<span class="text-sm font-bold text-slate-200 truncate group-hover/card:text-white">Podcast</span>
+</div>
+<div class="mt-auto space-y-3">
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-pink-500 ring-1 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-yellow-400 ring-1 ring-white/10"></div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-[9px] text-slate-400 font-medium bg-slate-900/50 border border-slate-700 px-2 py-1 rounded">Poppins</span>
+</div>
+</div>
+</div>
+</div>
+<div class="snap-start shrink-0 w-48 p-4 rounded-xl border border-white/10 bg-slate-800/40 hover:bg-slate-700/40 hover:border-white/20 cursor-pointer transition-all h-48 relative backdrop-blur-sm group/card">
+<div class="flex flex-col h-full">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-emerald-900 flex items-center justify-center text-emerald-400 font-bold text-xs shadow-sm border border-emerald-700/50">
+                                            Tech
+                                        </div>
+<span class="text-sm font-bold text-slate-200 truncate group-hover/card:text-white">Tech Talk</span>
+</div>
+<div class="mt-auto space-y-3">
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-emerald-500 ring-1 ring-white/10"></div>
+<div class="w-6 h-6 rounded-full bg-slate-800 ring-1 ring-white/10"></div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-[9px] text-slate-400 font-medium bg-slate-900/50 border border-slate-700 px-2 py-1 rounded">JetBrains</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section>
+<div class="flex items-center gap-3 mb-5">
+<span class="flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold border border-slate-700 bg-slate-800 text-slate-400">3</span>
+<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-widest">Control Mode</h3>
+</div>
+<div class="space-y-3">
+<label class="relative flex items-start p-4 cursor-pointer rounded-lg border border-slate-700/50 hover:bg-slate-800/50 transition-colors glass-card">
+<input class="mt-1 h-4 w-4 text-blue-600 bg-slate-900 border-slate-600 focus:ring-blue-500 focus:ring-offset-slate-900" name="control-mode" type="radio"/>
+<div class="ml-3">
+<div class="flex items-center gap-2">
+<span class="block text-sm font-medium text-white">Autopilot</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-green-900/30 text-green-400 border border-green-800">~5 mins</span>
+</div>
+<p class="mt-1 text-xs text-slate-500">Generate complete video in one go.</p>
+</div>
+</label>
+<label class="relative flex items-start p-4 cursor-pointer rounded-lg border border-blue-500/50 bg-blue-900/10 transition-colors">
+<input checked="" class="mt-1 h-4 w-4 text-blue-600 bg-slate-900 border-blue-500 focus:ring-blue-500 focus:ring-offset-slate-900" name="control-mode" type="radio"/>
+<div class="ml-3">
+<div class="flex items-center gap-2">
+<span class="block text-sm font-medium text-white">Co-Pilot</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-600 text-white shadow-lg shadow-blue-500/20">Recommended</span>
+</div>
+<p class="mt-1 text-xs text-blue-200">Review and approve at key steps.</p>
+</div>
+</label>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-3 mb-5">
+<span class="flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold border border-slate-700 bg-slate-800 text-slate-400">4</span>
+<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-widest">Platform Target</h3>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="cursor-pointer group flex flex-col items-center justify-center p-4 rounded-xl border border-white/5 bg-slate-800/40 hover:border-slate-600 hover:bg-slate-800 transition-all backdrop-blur-sm">
+<div class="w-10 h-10 mb-2 flex items-center justify-center rounded-full bg-slate-700/50 text-white group-hover:bg-slate-600 transition-colors">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.1c0 2.54-.78 4.69-2.27 6.64-1.49 1.95-3.83 3.12-6.3 3.16-4.52.07-8.17-3.66-8.02-8.2.06-4.32 3.65-7.85 7.97-7.85v4.06c-2.31 0-4.14 1.96-4.01 4.27.1 1.79 1.48 3.32 3.27 3.6 2.09.33 4.02-1.09 4.31-3.15.06-.41.07-.83.06-1.25V6.85c0-2.28-.01-4.56-.03-6.84z"></path></svg>
+</div>
+<span class="text-xs font-medium text-slate-400 group-hover:text-white">TikTok</span>
+</div>
+<div class="cursor-pointer group flex flex-col items-center justify-center p-4 rounded-xl border-2 border-blue-500 bg-blue-500/10 transition-all shadow-[0_0_15px_rgba(59,130,246,0.15)] relative">
+<div class="absolute -top-3 bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-full font-bold shadow-lg uppercase tracking-wider">Target</div>
+<div class="w-10 h-10 mb-2 flex items-center justify-center rounded-full bg-blue-500 text-white transition-colors shadow-lg shadow-blue-500/30">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path></svg>
+</div>
+<span class="text-xs font-bold text-white">Reels</span>
+</div>
+<div class="cursor-pointer group flex flex-col items-center justify-center p-4 rounded-xl border border-white/5 bg-slate-800/40 hover:border-red-500/50 hover:bg-slate-800 transition-all backdrop-blur-sm">
+<div class="w-10 h-10 mb-2 flex items-center justify-center rounded-full bg-slate-700/50 text-white group-hover:bg-red-600 transition-colors">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg>
+</div>
+<span class="text-xs font-medium text-slate-400 group-hover:text-white">Shorts</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div class="relative z-10 px-8 py-5 border-t border-white/10 bg-slate-900/60 flex items-center justify-between backdrop-blur-md">
+<div class="flex flex-col">
+<div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-0.5">Estimated Cost</div>
+<div class="flex items-baseline gap-1.5 text-white">
+<span class="font-bold text-2xl tracking-tight">85</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-slate-300 font-medium">CREDITS</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-colors">Back</button>
+<button class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(79,70,229,0.4)] flex items-center gap-2 transition-all transform hover:scale-[1.02] border border-white/10">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                        Generate Project
+                    </button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

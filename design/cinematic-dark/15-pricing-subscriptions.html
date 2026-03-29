@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TakeOne - Pricing</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2f2",
+                        "secondary": "#f20d0d", 
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#050505",
+                        "surface-dark": "#0a1010",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #0df2f2 0deg, #3b82f6 180deg, #0df2f2 360deg)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(16, 34, 34, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border: 1px solid rgba(13, 242, 242, 0.3);
+            background: rgba(16, 34, 34, 0.8);
+        }
+        .neon-border {
+            position: relative;
+            background: rgba(16, 34, 34, 0.9);
+            background-clip: padding-box;
+            border: 2px solid transparent;
+            border-radius: 2rem;
+        }
+        .neon-border::before {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(to right, #0df2f2, #8b5cf6, #f97316);
+        }.toggle-checkbox:checked {
+            right: 0;
+            border-color: #0df2f2;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0df2f2;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+<div class="fixed inset-0 z-0 pointer-events-none">
+<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-screen" data-alt="Moody cinematic silhouette with blue and orange lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAN7TV77eylVe4fFI4v5UUlBbBDwIhCRe4XFvDSSOAnKvv2xJ31u7YZKFY-G89PFIBMT2EpYJueEViLtTIhBWEKRyZqGWNf2x_EPXFOEzBnjxdqFTiuqSVHYtNc7XdjXP4F61ytBxHqnv-A6va4UpA3k6YFLCmYF2d7G73qdIIl-jA777ucFoEUIqmWGBURsfem2nIRnqNJsuXn8V4G0U18yGRlbmplny6HYy1EhfqUn5wZ9BaP-yW1OWcigIGQa73qL7wy5M7J5w');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark/90 via-background-dark/80 to-background-dark"></div>
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[150px]"></div>
+</div>
+<div class="relative z-10 flex flex-col min-h-screen">
+<header class="w-full border-b border-white/5 bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-white">TakeOne</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Features</a>
+<a class="text-sm font-medium text-white hover:text-primary transition-colors" href="#">Pricing</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Showcase</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="hidden sm:block text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">Login</a>
+<button class="bg-white/10 hover:bg-white/20 text-white text-sm font-bold py-2 px-5 rounded-full transition-all border border-white/10">
+                        Get Started
+                    </button>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center pt-16 pb-24 px-4 sm:px-6">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<h1 class="text-4xl md:text-6xl font-black tracking-tight text-white mb-6 drop-shadow-2xl">
+                    Unleash Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">Creative Potential</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">
+                    Choose the plan that fits your studio needs. Create cinematic masterpieces with AI-powered tools. Cancel anytime.
+                </p>
+</div>
+<div class="flex items-center justify-center gap-4 mb-16">
+<span class="text-slate-300 font-medium">Monthly</span>
+<label class="relative inline-flex items-center cursor-pointer" for="billing-toggle">
+<input class="sr-only peer" id="billing-toggle" type="checkbox"/>
+<div class="w-14 h-8 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+</label>
+<span class="text-white font-medium flex items-center gap-2">
+                    Yearly 
+                    <span class="text-xs font-bold text-background-dark bg-primary px-2 py-0.5 rounded-full">Save 20%</span>
+</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full items-start">
+<div class="glass-card rounded-lg p-8 flex flex-col gap-6 transform transition-all hover:scale-[1.02] duration-300">
+<div>
+<h3 class="text-xl font-bold text-white mb-2">Starter</h3>
+<p class="text-slate-400 text-sm mb-4">Perfect for hobbyists and students.</p>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black text-white">$0</span>
+<span class="text-slate-500 font-medium">/mo</span>
+</div>
+</div>
+<ul class="flex flex-col gap-4 flex-1">
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            100 AI Credits
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Basic Brand Kits
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            720p Export
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Community Support
+                        </li>
+</ul>
+<button class="w-full py-3 px-6 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm transition-colors border border-slate-700">
+                        Select Plan
+                    </button>
+</div>
+<div class="neon-border p-8 flex flex-col gap-6 relative transform md:-translate-y-4 md:scale-105 shadow-2xl shadow-primary/20">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-blue-500 text-background-dark text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                        Most Popular
+                    </div>
+<div>
+<h3 class="text-xl font-bold text-white mb-2">Pro</h3>
+<p class="text-slate-300 text-sm mb-4">For serious creators and freelancers.</p>
+<div class="flex items-baseline gap-1">
+<span class="text-5xl font-black text-white">$29</span>
+<span class="text-slate-400 font-medium">/mo</span>
+</div>
+</div>
+<ul class="flex flex-col gap-4 flex-1">
+<li class="flex items-center gap-3 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+                            Unlimited AI Credits
+                        </li>
+<li class="flex items-center gap-3 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+                            Advanced Brand Kits
+                        </li>
+<li class="flex items-center gap-3 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+                            4K Export
+                        </li>
+<li class="flex items-center gap-3 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+                            Priority Support
+                        </li>
+<li class="flex items-center gap-3 text-white text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+                            Analytics Dashboard
+                        </li>
+</ul>
+<button class="w-full py-4 px-6 rounded-full bg-primary hover:bg-primary/90 text-background-dark font-bold text-base transition-colors shadow-lg shadow-primary/25">
+                        Select Plan
+                    </button>
+</div>
+<div class="glass-card rounded-lg p-8 flex flex-col gap-6 transform transition-all hover:scale-[1.02] duration-300">
+<div>
+<h3 class="text-xl font-bold text-white mb-2">Studio</h3>
+<p class="text-slate-400 text-sm mb-4">Scalable power for agencies.</p>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black text-white">$99</span>
+<span class="text-slate-500 font-medium">/mo</span>
+</div>
+</div>
+<ul class="flex flex-col gap-4 flex-1">
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Custom AI Models
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Unlimited Brand Kits
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            8K Export
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Dedicated Account Manager
+                        </li>
+<li class="flex items-center gap-3 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            API Access
+                        </li>
+</ul>
+<button class="w-full py-3 px-6 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm transition-colors border border-slate-700">
+                        Select Plan
+                    </button>
+</div>
+</div>
+<div class="w-full max-w-3xl mt-24">
+<h2 class="text-2xl font-bold text-white text-center mb-8">Frequently Asked Questions</h2>
+<div class="flex flex-col gap-4">
+<details class="group glass-card rounded-lg overflow-hidden border border-white/5">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-6 select-none">
+<p class="text-white text-base font-medium">Can I change plans later?</p>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 pt-0 text-slate-400 text-sm leading-relaxed">
+                            Yes, you can upgrade or downgrade your plan at any time. If you upgrade, the changes take effect immediately. If you downgrade, the changes take effect at the end of your current billing cycle.
+                        </div>
+</details>
+<details class="group glass-card rounded-lg overflow-hidden border border-white/5">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-6 select-none">
+<p class="text-white text-base font-medium">What payment methods do you accept?</p>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 pt-0 text-slate-400 text-sm leading-relaxed">
+                            We accept all major credit cards including Visa, Mastercard, American Express, as well as PayPal. Enterprise clients can also pay via invoice or wire transfer.
+                        </div>
+</details>
+<details class="group glass-card rounded-lg overflow-hidden border border-white/5">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-6 select-none">
+<p class="text-white text-base font-medium">Is there a student discount?</p>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 pt-0 text-slate-400 text-sm leading-relaxed">
+                            Absolutely! Students with a valid .edu email address or student ID are eligible for a 50% discount on the Pro plan. Contact our support team to apply.
+                        </div>
+</details>
+<details class="group glass-card rounded-lg overflow-hidden border border-white/5">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-6 select-none">
+<p class="text-white text-base font-medium">How does the free trial work?</p>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 pt-0 text-slate-400 text-sm leading-relaxed">
+                            The free trial gives you full access to the Pro plan features for 14 days. No credit card is required to start. At the end of the trial, you can choose to subscribe or automatically downgrade to the free Starter plan.
+                        </div>
+</details>
+</div>
+</div>
+</main>
+<footer class="border-t border-white/10 bg-background-dark py-12">
+<div class="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+<p class="mb-4">© 2024 TakeOne. All rights reserved.</p>
+<div class="flex justify-center gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

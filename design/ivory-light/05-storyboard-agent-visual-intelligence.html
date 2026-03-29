@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TakeOne - Light Ivory Storyboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-ivory: #FFFFF0;
+            --bg-panel: rgba(255, 255, 255, 0.7);
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --border-glow: #00e5ff;
+            --accent-neon-orange: #ff4d00;
+            --accent-neon-blue: #00e5ff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #52525b;
+            --text-tertiary: #a1a1aa;
+            --status-success: #00c853;
+            --status-warning: #ff8f00;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-ivory);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 77, 0, 0.12) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-ivory);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .glass-panel {
+            background: var(--bg-panel);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .border-neon {
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.05);
+        }
+        .card-ivory {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .card-ivory:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-neon-blue);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+        }
+        .btn-neon-gradient {
+            background: linear-gradient(135deg, #ff4d00 0%, #00e5ff 100%);
+            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.3);
+            color: white;
+        }
+        .btn-neon-gradient:hover {
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+            filter: brightness(1.05);
+        }
+        .drag-handle {
+            cursor: grab;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .active-tab {
+            border-bottom: 2px solid var(--accent-neon-blue);
+            color: var(--accent-neon-blue);
+            background-color: rgba(0, 229, 255, 0.05);
+        }
+        .inactive-tab {
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+        }
+        .inactive-tab:hover {
+            color: var(--text-primary);
+            background-color: rgba(0,0,0,0.02);
+        }input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: var(--accent-neon-blue);
+            margin-top: -5px;
+            box-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+            cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.1);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden text-sm text-[#1a1a1a]">
+<header class="h-16 border-b border-[#00e5ff]/20 bg-white/70 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-[var(--accent-neon-blue)]">
+<span class="material-symbols-outlined text-3xl drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">movie_edit</span>
+<span class="font-display font-bold text-lg tracking-tight text-[#1a1a1a]">TAKEONE</span>
+</div>
+<div class="h-6 w-px bg-black/10 mx-2"></div>
+<div>
+<h1 class="font-medium text-[#1a1a1a] tracking-wide">Cold Brew Coffee Demo</h1>
+<div class="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+<span>Instagram Reels (9:16)</span>
+<span class="w-1 h-1 rounded-full bg-[var(--text-tertiary)]"></span>
+<span>Last saved 2m ago</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 bg-white/50 p-1 rounded-lg border border-[#00e5ff]/20 shadow-sm">
+<div class="px-3 py-1.5 rounded text-[var(--text-secondary)] hover:text-[#1a1a1a] cursor-pointer transition-colors">Script</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded bg-[var(--accent-neon-blue)] text-white font-bold shadow-[0_2px_10px_rgba(0,229,255,0.3)]">Storyboard</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded text-[var(--text-tertiary)] hover:text-[#1a1a1a] transition-colors">Visuals</div>
+<span class="material-symbols-outlined text-[16px] text-[var(--text-tertiary)]">chevron_right</span>
+<div class="px-3 py-1.5 rounded text-[var(--text-tertiary)] hover:text-[#1a1a1a] transition-colors">Edit</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors hover:border-[var(--accent-neon-blue)] hover:text-[var(--accent-neon-blue)] text-gray-500 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">undo</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors hover:border-[var(--accent-neon-blue)] hover:text-[var(--accent-neon-blue)] text-gray-500 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">redo</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors hover:border-[var(--accent-neon-orange)] text-[var(--accent-neon-orange)] shadow-sm" title="Light Theme Active">
+<span class="material-symbols-outlined text-[18px] fill-1">light_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#ff4d00] to-[#ff9100] flex items-center justify-center text-xs font-bold border border-white text-white shadow-[0_2px_8px_rgba(255,77,0,0.3)]">
+                    SJ
+                </div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[var(--accent-neon-blue)] rounded-full blur-[100px] opacity-[0.1] pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[20%] w-[600px] h-[600px] bg-[var(--accent-neon-orange)] rounded-full blur-[120px] opacity-[0.08] pointer-events-none"></div>
+<aside class="w-16 border-r border-[#00e5ff]/20 bg-white/60 backdrop-blur-sm flex flex-col items-center py-6 gap-6 shrink-0 z-10 shadow-[2px_0_10px_rgba(0,0,0,0.02)]">
+<button class="w-10 h-10 rounded-lg bg-white border border-gray-200 hover:border-[var(--accent-neon-blue)] hover:bg-[var(--accent-neon-blue)]/10 hover:text-[var(--accent-neon-blue)] text-[var(--text-secondary)] flex items-center justify-center transition-all group relative shadow-sm" title="Add Shot">
+<span class="material-symbols-outlined">add_box</span>
+<span class="absolute left-12 bg-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-[#00e5ff]/30 text-[var(--accent-neon-blue)] shadow-[0_4px_12px_rgba(0,0,0,0.05)] font-medium">Add Shot</span>
+</button>
+<button class="w-10 h-10 rounded-lg hover:bg-white text-[var(--text-secondary)] hover:text-[#1a1a1a] flex items-center justify-center transition-colors group relative border border-transparent hover:border-gray-200 hover:shadow-sm">
+<span class="material-symbols-outlined">splitscreen</span>
+<span class="absolute left-12 bg-white text-[#1a1a1a] text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-gray-200 shadow-sm">Split Shot</span>
+</button>
+<button class="w-10 h-10 rounded-lg hover:bg-white text-[var(--text-secondary)] hover:text-[#1a1a1a] flex items-center justify-center transition-colors group relative border border-transparent hover:border-gray-200 hover:shadow-sm">
+<span class="material-symbols-outlined">merge_type</span>
+<span class="absolute left-12 bg-white text-[#1a1a1a] text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-gray-200 shadow-sm">Merge Shots</span>
+</button>
+<div class="h-px w-8 bg-black/5"></div>
+<button class="w-10 h-10 rounded-lg hover:bg-white text-[var(--text-secondary)] hover:text-[#1a1a1a] flex items-center justify-center transition-colors group relative border border-transparent hover:border-gray-200 hover:shadow-sm">
+<span class="material-symbols-outlined">image</span>
+<span class="absolute left-12 bg-white text-[#1a1a1a] text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-gray-200 shadow-sm">Upload Ref</span>
+</button>
+</aside>
+<div class="flex-1 relative bg-transparent grid-bg overflow-y-auto overflow-x-hidden p-8 z-0">
+<div class="flex items-center justify-between mb-8 sticky top-0 z-10 glass-panel p-4 rounded-xl border-neon bg-white/80">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-semibold text-[#1a1a1a] tracking-wide">Storyboard Sequence</h2>
+<span class="bg-black/5 text-[var(--text-secondary)] px-2.5 py-0.5 rounded text-xs border border-black/5 font-medium">6 Shots</span>
+<span class="bg-black/5 text-[var(--text-secondary)] px-2.5 py-0.5 rounded text-xs border border-black/5 font-medium">Total: 32.0s</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded hover:bg-black/5 text-[var(--text-secondary)] hover:text-[#1a1a1a] transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="p-2 rounded hover:bg-black/5 text-[var(--text-secondary)] hover:text-[#1a1a1a] transition-colors">
+<span class="material-symbols-outlined">view_list</span>
+</button>
+<div class="h-4 w-px bg-black/10 mx-1"></div>
+<div class="relative group">
+<input class="w-24 accent-[var(--accent-neon-blue)] h-1 rounded-lg appearance-none cursor-pointer" max="150" min="50" type="range" value="100"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-20">
+<div class="group card-ivory rounded-xl p-4 relative flex flex-col gap-3">
+<div class="absolute top-0 left-0 w-full h-[3px] bg-[var(--accent-neon-blue)] rounded-t-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_10px_var(--accent-neon-blue)]"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-black/5 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] font-bold">01</span>
+<span class="text-xs font-bold tracking-wide text-[var(--accent-neon-blue)] bg-[var(--accent-neon-blue)]/10 border border-[var(--accent-neon-blue)]/20 px-2 py-0.5 rounded">HOOK</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)]"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)] drag-handle"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors shadow-inner">
+<img alt="Coffee Sketch" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV1vx84n_aF4AbUKvetYRP4EYhoJYXBNewKnx5i_m6FZ2qCeu3kFitY9tmGuhGWC7c7mEPXeZmT8fAIN3BFdosTp4R1cEt9_-lJfC3zWd6vJ7sdDr0uT0QwmJdEXLJEpy7yPuN2rCaA6a_rXPAXSuJ8ZGCOsdO-hmSMolS2KRDscPg6bk1elx_ivUP0ckevGEtvMNCeGj4EoipylUaZ0Xwn45H7xg7IGWDGmzM-YZ0zd3tCi8DJWZgu1f1gwPUGaLa21EcmKskNw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Extreme Close-Up</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Macro</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_5px_rgba(0,229,255,0.4)]">3.2s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2 font-medium">
+                            Extreme close-up of dark coffee grounds in a glass jar. Timer visible in soft focus background. Morning light streaming from left.
+                        </p>
+<div class="p-2 bg-black/5 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-bold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Ever wonder why your coffee tastes bitter?"</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>Cut</span>
+</div>
+</div>
+</div>
+<div class="group card-ivory rounded-xl p-4 relative flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-black/5 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] font-bold">02</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)]"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)] drag-handle"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors flex shadow-inner">
+<div class="w-1/2 h-full border-r border-white/20 relative">
+<img alt="Hot Coffee" class="w-full h-full object-cover opacity-80 grayscale mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFdmAGtxNvZ25n_bHc_ciY8SUaxq0hFDvXk1ExUXbtI5IXmEUDS-MpTY804w9wvdNWt5g9WbFGe4KP8ctSepDEAjBy2dqz0BXEmVZ8VtUrAGAnhgV14WdjuWfqVCzQ8gy2DNy3xYjoEP-sL2CHxzeUriKB1ODYyOYR0pxiacv5HjPRr7gUZZ_iPKG9lkueBKPE7z_nhO7MgrBJgYasFIMGtVhwd6ef4z1-5jUvaBHHy296Gj9VtWpiDm_qA_8SKepwWsl_ZxF4hg"/>
+<div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs bg-black/30 backdrop-blur-[1px]">HOT</div>
+</div>
+<div class="w-1/2 h-full relative">
+<img alt="Cold Brew" class="w-full h-full object-cover opacity-100 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDHmgVT9Pe0-c3MLsgbG2a7KyEGZn8ExPJzIhWjWOxqNRMJteQM1mOKxVQ5eNrwtyk5GYqm8McyZ3D47gO7FTBzY6OfovIQYGCG4Jq4-1juxI3xiVHESzcLRV7GRiVhAH4qP1QOypaFFxjpll3ZQqBC3sTPgu-kOvucgicnF8eVhLu21AqetZDY-Pgrk9E9aVLyUGMTOiCqvNH8ur-0x-LcOplX_pJRRVWNIicspBUXPfJYkolLDfumF-eUS98QbJhPsxrJI42nw"/>
+<div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs bg-black/10 backdrop-blur-[1px]">COLD</div>
+</div>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Split Screen</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Comparison</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_5px_rgba(0,229,255,0.4)]">6.5s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2 font-medium">
+                            Split screen: hot brew (dark/steamy/chaotic) vs cold brew (light/refreshing/calm). Visual contrast emphasized.
+                        </p>
+<div class="p-2 bg-black/5 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-bold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Traditional heat burns the flavor. Cold brew extracts the soul."</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">blur_on</span>
+<span>Dissolve (0.5s)</span>
+</div>
+</div>
+</div>
+<div class="group card-ivory rounded-xl p-4 relative flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-black/5 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] font-bold">03</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)]"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 hover:text-[#1a1a1a] text-[var(--text-tertiary)] drag-handle"><span class="material-symbols-outlined text-[18px]">drag_indicator</span></button>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-50 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--accent-neon-blue)]/50 transition-colors">
+<div class="absolute inset-0 bg-white/40 flex flex-col items-center justify-center gap-2">
+<div class="w-8 h-8 border-2 border-[var(--accent-neon-blue)] border-t-transparent rounded-full animate-spin shadow-[0_0_10px_rgba(0,229,255,0.2)]"></div>
+<span class="text-[10px] text-[var(--accent-neon-blue)] font-bold tracking-wide animate-pulse drop-shadow-[0_0_2px_rgba(0,229,255,0.5)]">REFINING COMPOSITION...</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2 font-medium">
+                            Medium shot of water being poured over grounds. Slow motion (60fps). Water droplets catching the light.
+                        </p>
+<div class="p-2 bg-black/5 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-bold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Just add water and time."</p>
+</div>
+</div>
+<div class="flex items-center justify-center pt-2 border-t border-black/5 border-dashed mt-auto">
+<div class="flex items-center gap-1 text-[var(--text-tertiary)] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>Cut</span>
+</div>
+</div>
+</div>
+<div class="group card-ivory border border-[var(--status-warning)]/50 rounded-xl p-4 relative flex flex-col gap-3 shadow-[0_0_15px_rgba(255,143,0,0.1)] hover:shadow-[0_0_20px_rgba(255,143,0,0.2)] hover:border-[var(--status-warning)]">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-black/5 border border-black/5 flex items-center justify-center text-xs font-mono text-[var(--text-secondary)] font-bold">04</span>
+<span class="text-xs font-bold tracking-wide text-blue-600 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded">BODY</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-[var(--status-warning)] animate-pulse drop-shadow-[0_0_5px_rgba(255,143,0,0.5)]" title="Inconsistent Style">warning</span>
+</div>
+</div>
+<div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border border-black/5 group-hover:border-[var(--status-warning)]/50 transition-colors shadow-inner">
+<img alt="Pouring" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_FQrhbNjZzwwIrYPwMbj37qGemhlmOg_yhF0FGBokhGG0Wcc07N-1YDiRphEFf28GjtqEDh0Bx3WI7qPtXRF1AqA3d4_rbEMI2Kq8JhIw4wN44d_K0LBHNiW4tk9u6eMdleQYv6l0Tqom5j6PA7YWcHVr4acBa4h3_hge_TRNO2d7B_GSgfI1j7M5dshpizraq-K3VGHTG35KPAHb_HeoZqnaAdB493CAPIh6NNK1B54m2i-3dWrIXwfU74moWw2DbpSW3vusaw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+<div class="flex gap-1 flex-wrap">
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Wide Shot</span>
+<span class="text-[10px] bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[#1a1a1a] border border-gray-200 font-medium">Eye Level</span>
+</div>
+<span class="text-xs font-mono font-bold text-white bg-[var(--accent-neon-blue)] px-1.5 py-0.5 rounded shadow-[0_2px_5px_rgba(0,229,255,0.4)]">4.0s</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-[var(--text-secondary)] text-xs leading-relaxed line-clamp-2 font-medium">
+                           Time-lapse of the jar in fridge. Lighting changes from day to night to day.
+                       </p>
+<div class="p-2 bg-black/5 rounded border border-black/5">
+<p class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-bold mb-1">Script Beat</p>
+<p class="text-xs italic text-[var(--text-primary)] font-medium">"Let it steep for 12 hours while you sleep."</p>
+</div>
+</div>
+<button class="w-full mt-auto py-1.5 rounded bg-[var(--status-warning)]/10 text-[var(--status-warning)] border border-[var(--status-warning)]/30 text-xs font-bold hover:bg-[var(--status-warning)]/20 transition-colors flex items-center justify-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+                        Auto-Fix Lighting Style
+                   </button>
+</div>
+<div class="border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center gap-3 text-[var(--text-tertiary)] hover:text-[var(--accent-neon-blue)] hover:border-[var(--accent-neon-blue)] hover:bg-[var(--accent-neon-blue)]/5 transition-all cursor-pointer min-h-[300px] group bg-white/40">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_circle</span>
+<span class="text-sm font-medium">Add Shot 07</span>
+</div>
+</div>
+</div>
+<aside class="w-80 border-l border-[#00e5ff]/20 bg-white/80 backdrop-blur-md flex flex-col shrink-0 z-20 shadow-[-4px_0_20px_rgba(0,0,0,0.02)]">
+<div class="h-14 flex items-stretch px-0 border-b border-gray-200/60">
+<button class="flex-1 font-medium text-sm flex items-center justify-center transition-all active-tab relative font-semibold">
+        Visual Intelligence
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--accent-neon-orange)] shadow-[0_0_5px_var(--accent-neon-orange)]"></span>
+</button>
+<button class="flex-1 font-medium text-sm flex items-center justify-center transition-all inactive-tab border-l border-gray-100">
+        Asset Library
+    </button>
+</div>
+<div class="p-5 flex-1 overflow-y-auto space-y-8">
+<div class="text-center relative py-2">
+<div class="inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-gray-100 relative bg-white shadow-sm">
+<svg class="w-full h-full transform -rotate-90 absolute top-0 left-0">
+<circle class="text-gray-100" cx="48" cy="48" fill="transparent" r="44" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-[var(--status-success)] drop-shadow-[0_0_4px_rgba(0,200,83,0.4)]" cx="48" cy="48" fill="transparent" r="44" stroke="currentColor" stroke-dasharray="276" stroke-dashoffset="41" stroke-width="4"></circle>
+</svg>
+<div class="flex flex-col items-center">
+<span class="text-2xl font-bold font-display text-[#1a1a1a]">85%</span>
+<span class="text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-bold">Consistency</span>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white/80 rounded-lg p-3 border border-gray-200 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs text-[var(--text-secondary)] font-bold">Color Palette</span>
+<span class="text-xs text-[var(--status-success)] flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                Match
+                            </span>
+</div>
+<div class="flex gap-1.5 h-6 w-full rounded overflow-hidden mb-1 shadow-inner">
+<div class="flex-1 bg-[#3E2723]"></div>
+<div class="flex-1 bg-[#1A1A1A]"></div>
+<div class="flex-1 bg-[#D7CCC8]"></div>
+<div class="flex-1 bg-[#5D4037]"></div>
+</div>
+<p class="text-[10px] text-[var(--text-tertiary)] font-medium">Dark Roast / Cream / Matte Black</p>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1.5">
+<span class="text-[var(--text-secondary)] font-medium">Lighting Consistency</span>
+<span class="text-[var(--status-warning)] font-bold">Shot 04 deviates</span>
+</div>
+<div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-[var(--status-warning)] w-[70%] h-full rounded-full shadow-[0_0_5px_rgba(255,143,0,0.4)]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1.5">
+<span class="text-[var(--text-secondary)] font-medium">Pacing Flow</span>
+<span class="text-[var(--text-tertiary)] font-medium">Dynamic</span>
+</div>
+<div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-[var(--accent-neon-blue)] w-[90%] h-full rounded-full shadow-[0_0_5px_rgba(0,229,255,0.4)]"></div>
+</div>
+</div>
+</div>
+<div class="h-px bg-gray-200"></div>
+<div>
+<h4 class="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-wider mb-3">Brand Kit Applied</h4>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white border border-gray-200 shadow-sm">
+<div class="w-10 h-10 bg-gradient-to-br from-[#8d6e63] to-[#3e2723] rounded flex items-center justify-center font-serif font-bold text-white text-lg border border-white/20 shadow-md">C</div>
+<div>
+<div class="text-sm font-bold text-[#1a1a1a]">Coffee Co.</div>
+<div class="text-[10px] text-[var(--text-secondary)] font-medium">Cinematic • Warm • Low-Key</div>
+</div>
+<button class="ml-auto text-[var(--text-tertiary)] hover:text-[#1a1a1a]">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</div>
+</div>
+<div class="bg-gradient-to-b from-white to-gray-50 p-4 rounded-xl border border-[#00e5ff]/20 relative overflow-hidden shadow-sm">
+<div class="absolute top-0 right-0 p-2 opacity-20">
+<span class="material-symbols-outlined text-4xl text-[var(--accent-neon-blue)]">smart_toy</span>
+</div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-8 h-8 rounded bg-[var(--accent-neon-blue)] flex items-center justify-center shrink-0 shadow-[0_2px_8px_rgba(0,229,255,0.3)] text-white">
+<span class="material-symbols-outlined text-[18px]">brush</span>
+</div>
+<div>
+<h5 class="text-xs font-bold text-[#1a1a1a] mb-1">Storyboard Artist</h5>
+<p class="text-[11px] text-[var(--text-secondary)] leading-tight font-medium">
+                                I've adjusted the camera angles on Shot 2 and 3 to maintain the "Low Angle" preference from your Brand Kit.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-5 border-t border-gray-200 space-y-3 bg-white/90 backdrop-blur-md">
+<button class="w-full py-3 btn-neon-gradient text-white rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 group border-0">
+<span class="material-symbols-outlined group-hover:animate-pulse">movie_filter</span>
+                    Approve &amp; Generate Visuals
+                </button>
+<button class="w-full py-2.5 bg-white hover:bg-gray-50 border border-[#00e5ff]/40 text-[#1a1a1a] hover:text-[var(--accent-neon-blue)] rounded-lg font-bold text-sm transition-colors shadow-sm">
+                    Back to Script
+                </button>
+</div>
+</aside>
+</main>
+</body></html>

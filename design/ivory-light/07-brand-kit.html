@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Brand Kit Management - TakeOne</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#ff4d00","accent-cyan": "#00e5ff",
+                "accent-orange": "#ff9100",
+                "background-ivory": "#fdfdfb","background-soft": "#f4f1ee","surface-ivory": "#ffffff",
+                "surface-hover": "#fbfbfb",
+                "text-charcoal": "#1a1a1a",
+                "text-subtle": "#5a5a5a",
+                "border-soft": "#e5e5e0",
+              },
+              fontFamily: {
+                "display": ["Space Grotesk", "sans-serif"],
+                "sans": ["Space Grotesk", "sans-serif"],
+                "body-font": ["Inter", "sans-serif"],
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+              backgroundImage: {
+                'light-leak-cyan-orange': 'radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.15) 0%, rgba(255, 145, 0, 0.05) 90%)',
+                'ivory-gradient': 'linear-gradient(to bottom, #ffffff, #fdfdfb)',
+                'neon-orange-gradient': 'linear-gradient(135deg, #ff9100 0%, #ff4d00 100%)',
+              },
+              boxShadow: {
+                'glow-subtle': '0 0 15px rgba(0, 0, 0, 0.03)',
+                'glow-accent': '0 0 20px rgba(255, 77, 0, 0.15)',
+                'card-float': '0 10px 30px -10px rgba(0,0,0,0.05)',
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            background-color: #fdfdfb;
+            color: #1a1a1a;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f1ee; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d0; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c4c4c0; 
+        }
+        .glow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 16px;
+        }
+        .glow-swatch {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .glow-swatch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--swatch-color, rgba(0,0,0,0.1));
+            z-index: 10;
+            border-color: transparent;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 0 2px rgba(255, 77, 0, 0.1);
+            border-color: #ff4d00;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #1a1a1a 0%, #5a5a5a 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-ivory text-text-charcoal overflow-hidden selection:bg-accent-orange selection:text-white">
+<div class="flex h-screen w-full">
+<div class="hidden md:flex flex-col w-64 bg-surface-ivory border-r border-border-soft h-full shrink-0 z-20">
+<div class="flex items-center gap-3 p-6">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 shadow-lg border border-accent-orange/20" data-alt="Abstract gradient logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_848QiIuv32DXAxz5LQXGUCWgR5RYbRArDIc7wcBN-8faGjDtH56E1u5qYBWTbhww9eH8DFQw9U2glaBlTxuFcGfG5HZZH9OB3owN4Y8Pc5oUZ3y9k7DFHeOlYOOnFDVflRvdu2_NnL3Up36Dz-lbC1XDzH0uWFsRbert7JXk70lbLuvf1pecNnF0EaewEnW28rGceMn8TOERzowzNWdeh3y5AQAh2a63-GyOSHNV_tSr5QAf4AFHvN7oHzEiXNKrELr9OghPYg");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-text-charcoal text-base font-bold truncate tracking-wide">TakeOne</h1>
+<p class="text-text-subtle text-xs font-normal">Pro Plan</p>
+</div>
+</div>
+<div class="flex flex-col gap-1 px-3 py-2 flex-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">folder</span>
+<span class="text-sm font-medium">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-accent-orange/5 border border-accent-orange/10 text-text-charcoal group relative shadow-sm" href="#">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 h-4/5 w-1 rounded-r-lg bg-accent-orange shadow-[0_0_8px_#ff9100]"></div>
+<span class="material-symbols-outlined text-[20px] text-accent-orange">palette</span>
+<span class="text-sm font-bold text-accent-orange">Brand Kits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+<span class="text-sm font-medium">Assets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+<div class="p-4 mt-auto border-t border-border-soft bg-background-ivory">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-gradient-to-r from-accent-orange to-primary hover:opacity-90 transition-opacity text-white text-sm font-bold shadow-lg shadow-accent-orange/30">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="">New Video</span>
+</button>
+</div>
+</div>
+<div class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-ivory">
+<div class="absolute top-0 left-0 w-full h-[500px] bg-accent-orange/5 blur-[120px] pointer-events-none rounded-full translate-y-[-50%]"></div>
+<div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent-cyan/5 blur-[150px] pointer-events-none rounded-full translate-y-[30%]"></div>
+<header class="h-16 border-b border-border-soft flex items-center justify-between px-6 bg-surface-ivory/80 backdrop-blur-md z-10 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-text-charcoal p-1">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-xl font-bold tracking-tight text-text-charcoal">Brand Kit Management</h2>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-text-subtle text-sm hidden sm:block">Last saved: <span class="text-text-charcoal font-medium">Just now</span></div>
+<button class="h-9 px-4 rounded-lg bg-background-soft border border-border-soft text-text-charcoal text-sm font-medium hover:bg-border-soft transition-colors">
+                    Preview
+                </button>
+<button class="h-9 px-4 rounded-lg bg-text-charcoal text-white text-sm font-bold hover:bg-black transition-colors shadow-lg shadow-black/10">
+                    Save Changes
+                </button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-6 md:p-8 relative z-0">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+<div class="w-full lg:w-72 flex flex-col gap-6 shrink-0">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-text-charcoal tracking-wide">Your Kits</h3>
+<button class="text-accent-orange hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="flex flex-col gap-3">
+<div class="p-0.5 rounded-xl bg-gradient-to-br from-accent-orange via-primary to-accent-cyan shadow-glow-accent">
+<div class="p-4 rounded-[10px] bg-white relative group cursor-pointer h-full">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-accent-orange/10 text-accent-orange border border-accent-orange/20 tracking-wider">Active</span>
+<span class="material-symbols-outlined text-text-subtle text-sm opacity-0 group-hover:opacity-100 transition-opacity">more_vert</span>
+</div>
+<h4 class="text-text-charcoal font-bold text-lg mb-1 tracking-tight">Primary Brand</h4>
+<p class="text-text-subtle text-sm">4 assets • 2 fonts</p>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-ivory border border-border-soft hover:border-accent-cyan/50 hover:shadow-lg transition-all cursor-pointer group hover:-translate-y-0.5">
+<div class="flex justify-between items-start mb-2">
+<div class="size-2 rounded-full bg-accent-cyan shadow-[0_0_8px_#00e5ff] mt-1"></div>
+<span class="material-symbols-outlined text-text-subtle text-sm opacity-0 group-hover:opacity-100 transition-opacity">more_vert</span>
+</div>
+<h4 class="text-text-subtle group-hover:text-text-charcoal font-bold text-lg mb-1 transition-colors">Podcast Series</h4>
+<p class="text-text-subtle/80 text-sm">3 assets • 1 font</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-ivory border border-border-soft hover:border-emerald-400 hover:shadow-lg transition-all cursor-pointer group hover:-translate-y-0.5">
+<div class="flex justify-between items-start mb-2">
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] mt-1"></div>
+<span class="material-symbols-outlined text-text-subtle text-sm opacity-0 group-hover:opacity-100 transition-opacity">more_vert</span>
+</div>
+<h4 class="text-text-subtle group-hover:text-text-charcoal font-bold text-lg mb-1 transition-colors">Client X</h4>
+<p class="text-text-subtle/80 text-sm">Pending Approval</p>
+</div>
+<button class="p-4 rounded-xl border border-dashed border-border-soft text-text-subtle hover:text-accent-orange hover:border-accent-orange/50 hover:bg-accent-orange/5 transition-all flex flex-col items-center justify-center gap-2 h-32 group">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform text-accent-orange/50 group-hover:text-accent-orange">add</span>
+<span class="font-medium text-sm">Create New Kit</span>
+</button>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-10 min-w-0 pb-12">
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between pb-2 border-b border-border-soft">
+<h3 class="text-xl font-bold text-text-charcoal flex items-center gap-3">
+<div class="p-1.5 rounded bg-accent-orange/10 text-accent-orange border border-accent-orange/20">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+                                Brand Identity
+                            </h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-bold uppercase tracking-wider text-text-subtle pl-1">Kit Name</label>
+<input class="bg-white border border-border-soft text-text-charcoal rounded-lg px-4 py-3 focus:outline-none focus:border-accent-orange focus:ring-1 focus:ring-accent-orange w-full transition-all input-glow placeholder-gray-400 shadow-sm" type="text" value="Primary Brand"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-bold uppercase tracking-wider text-text-subtle pl-1">Website URL</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-subtle material-symbols-outlined text-lg">link</span>
+<input class="bg-white border border-border-soft text-text-charcoal rounded-lg pl-11 pr-4 py-3 focus:outline-none focus:border-accent-orange focus:ring-1 focus:ring-accent-orange w-full transition-all input-glow placeholder-gray-400 shadow-sm" placeholder="https://takeone.com" type="text"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="group relative flex flex-col gap-4 p-8 rounded-2xl border border-border-soft bg-surface-ivory hover:shadow-card-float hover:border-accent-orange/20 transition-all text-center overflow-hidden">
+<div class="absolute inset-0 bg-accent-orange/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+<button class="bg-white p-2 rounded-full hover:text-accent-orange text-text-subtle border border-border-soft shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<div class="relative z-10">
+<div class="size-20 mx-auto bg-white rounded-full flex items-center justify-center mb-4 border border-border-soft shadow-sm group-hover:scale-110 transition-transform duration-500 text-accent-orange">
+<span class="material-symbols-outlined text-3xl">light_mode</span>
+</div>
+<p class="text-text-charcoal font-bold text-lg">Light Mode Logo</p>
+<p class="text-xs text-text-subtle mt-1">PNG, SVG (Max 5MB)</p>
+</div>
+<div class="mt-2 h-20 w-full flex items-center justify-center bg-background-soft rounded-xl border border-dashed border-border-soft relative z-10 group-hover:border-accent-orange/30 transition-colors">
+<img alt="Sample logo placeholder" class="h-8 object-contain opacity-80 mix-blend-multiply" data-alt="Abstract generic logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALnrf5IwCgrhioY9WOfHXplQmUTGwzInO-C8isTU-jg_0U3dCIc6y8PMe0JNerU3fVBM4I0LhAoKqigtQuCoBMmtfvcxsOa4uMDX_7uQ6nCizJCGopbmQh_QAJKmO7viZvd3nfT62Jjf-rW641hNO5ls-sle4sCpI8ftzyD4ydkAudyq6F4EKJ-U1Pw7ZqFQAf3pPZPQPifrV9fKSDgIewr3s48M98j9NV1vifpvcVmlmWPAJeiNbQJCQoTNqdsRww1sgN2t1VfA"/>
+</div>
+</div>
+<div class="group relative flex flex-col gap-4 p-8 rounded-2xl border border-border-soft bg-surface-ivory hover:shadow-card-float hover:border-accent-cyan/20 transition-all text-center overflow-hidden">
+<div class="absolute inset-0 bg-accent-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+<button class="bg-white p-2 rounded-full hover:text-accent-cyan text-text-subtle border border-border-soft shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<div class="relative z-10">
+<div class="size-20 mx-auto bg-text-charcoal rounded-full flex items-center justify-center mb-4 border border-border-soft shadow-sm group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-white text-3xl">dark_mode</span>
+</div>
+<p class="text-text-charcoal font-bold text-lg">Dark Mode Logo</p>
+<p class="text-xs text-text-subtle mt-1">PNG, SVG (Max 5MB)</p>
+</div>
+<div class="mt-2 h-20 w-full flex items-center justify-center bg-background-soft rounded-xl border border-dashed border-border-soft relative z-10 group-hover:border-accent-cyan/30 transition-colors">
+<p class="text-xs text-text-subtle font-medium">No file uploaded</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<div class="flex items-center justify-between pb-2 border-b border-border-soft">
+<h3 class="text-xl font-bold text-text-charcoal flex items-center gap-3">
+<div class="p-1.5 rounded bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+</div>
+                                Visual Style
+                            </h3>
+</div>
+<div>
+<h4 class="text-sm font-bold text-text-subtle mb-4 uppercase tracking-wider">Color Palette</h4>
+<div class="glow-grid">
+<div class="glow-swatch" style="background-color: #ff4d00; --swatch-color: rgba(255, 77, 0, 0.5);">
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="text-[10px] font-mono text-white bg-black/50 px-1 rounded backdrop-blur-sm">#FF4D00</span>
+</div>
+</div>
+<div class="glow-swatch bg-white border border-dashed border-border-soft hover:border-accent-orange/50">
+<div class="absolute inset-0 flex items-center justify-center text-text-subtle hover:text-accent-orange transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="glow-swatch" style="background-color: #34D399; --swatch-color: rgba(52, 211, 153, 0.5);">
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="text-[10px] font-mono text-white bg-black/30 px-1 rounded backdrop-blur-sm">#34D399</span>
+</div>
+</div>
+<div class="glow-swatch" style="background-color: #00e5ff; --swatch-color: rgba(0, 229, 255, 0.5);">
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="text-[10px] font-mono text-black font-bold bg-white/50 px-1 rounded backdrop-blur-sm">#00E5FF</span>
+</div>
+</div>
+<div class="glow-swatch" style="background-color: #1a1a1a; --swatch-color: rgba(26, 26, 26, 0.5);">
+<div class="absolute bottom-2 left-2 right-2 flex justify-between items-end opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="text-[10px] font-mono text-white bg-white/20 px-1 rounded backdrop-blur-sm">#1A1A1A</span>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-bold text-text-subtle mb-4 uppercase tracking-wider">Typography</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 rounded-sm bg-background-soft border border-border-soft hover:border-accent-cyan/50 hover:bg-white transition-all cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md">
+<div class="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-text-subtle hover:text-accent-cyan text-sm">edit</span>
+</div>
+<div class="flex items-center justify-between mb-4 border-b border-black/5 pb-2">
+<span class="text-xs text-text-subtle font-bold uppercase tracking-widest">Heading Font</span>
+</div>
+<div class="text-4xl font-bold text-text-charcoal font-display mb-2 tracking-tighter">Space Grotesk</div>
+<p class="text-sm text-text-subtle font-display">The quick brown fox jumps over the lazy dog.</p>
+</div>
+<div class="p-6 rounded-sm bg-background-soft border border-border-soft hover:border-accent-cyan/50 hover:bg-white transition-all cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-md">
+<div class="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-text-subtle hover:text-accent-cyan text-sm">edit</span>
+</div>
+<div class="flex items-center justify-between mb-4 border-b border-black/5 pb-2">
+<span class="text-xs text-text-subtle font-bold uppercase tracking-widest">Body Font</span>
+</div>
+<div class="text-4xl font-normal text-text-charcoal font-body-font mb-2 tracking-tight">Inter</div>
+<p class="text-sm text-text-subtle font-body-font">The quick brown fox jumps over the lazy dog.</p>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-bold text-text-subtle mb-4 uppercase tracking-wider flex items-center gap-2">
+                                AI Style Personality
+                                <span class="bg-gradient-to-r from-accent-orange to-primary text-white text-xs font-bold px-1.5 py-0.5 rounded shadow-sm">AI</span>
+</h4>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<button class="relative h-32 rounded-xl border border-border-soft overflow-hidden group text-left p-4 transition-all hover:border-accent-orange/50 hover:shadow-lg shadow-sm bg-white">
+<div class="absolute inset-0 bg-light-leak-cyan-orange opacity-40 group-hover:opacity-100 transition-opacity z-0"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<span class="material-symbols-outlined text-text-charcoal/80">movie_filter</span>
+<span class="text-text-charcoal font-bold text-lg tracking-wide">Cinematic</span>
+</div>
+</button>
+<button class="relative h-32 rounded-xl border border-border-soft overflow-hidden group text-left p-4 transition-all hover:border-border-soft/80 bg-background-soft hover:bg-white hover:shadow-md">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<span class="material-symbols-outlined text-text-subtle group-hover:text-text-charcoal transition-colors">crop_square</span>
+<span class="text-text-subtle font-medium text-lg tracking-wide group-hover:text-text-charcoal transition-colors">Minimalist</span>
+</div>
+</button>
+<button class="relative h-32 rounded-xl border border-accent-orange/30 overflow-hidden group text-left p-4 transition-all shadow-glow-accent hover:shadow-glow-accent ring-1 ring-accent-orange/10 bg-white">
+<div class="absolute inset-0 bg-neon-orange-gradient opacity-10 group-hover:opacity-20 transition-opacity z-0"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<span class="material-symbols-outlined text-accent-orange">bolt</span>
+<span class="text-text-charcoal font-bold text-lg tracking-wide">Neon</span>
+</div>
+</button>
+<button class="relative h-32 rounded-xl border border-dashed border-border-soft bg-transparent text-text-subtle hover:text-accent-orange hover:border-accent-orange/50 hover:bg-accent-orange/5 transition-all flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-2xl">add</span>
+<span class="font-medium text-sm">Add Custom</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 pt-4 pb-12">
+<div class="flex items-center justify-between pb-2 border-b border-border-soft">
+<h3 class="text-xl font-bold text-text-charcoal flex items-center gap-3">
+<div class="p-1.5 rounded bg-black/5 text-text-charcoal border border-black/10">
+<span class="material-symbols-outlined text-[20px]">folder_special</span>
+</div>
+                                Custom Assets
+                            </h3>
+</div>
+<div class="bg-white rounded-xl border border-border-soft p-1 shadow-sm">
+<div class="flex gap-1 border-b border-border-soft px-2 py-2 mb-2">
+<button class="px-4 py-1.5 rounded-lg bg-black/5 text-text-charcoal text-sm font-bold shadow-sm border border-black/5">Intro/Outro</button>
+<button class="px-4 py-1.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal text-sm font-medium transition-colors">Music</button>
+<button class="px-4 py-1.5 rounded-lg text-text-subtle hover:bg-background-soft hover:text-text-charcoal text-sm font-medium transition-colors">Overlays</button>
+</div>
+<div class="p-2 space-y-2">
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-background-soft transition-colors group cursor-pointer border border-transparent hover:border-border-soft">
+<div class="size-10 rounded bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 shadow-sm">
+<span class="material-symbols-outlined">movie</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-text-charcoal text-sm font-medium truncate">Main_Intro_4k.mp4</p>
+<p class="text-xs text-text-subtle">00:05 • 12MB</p>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-2 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-white text-text-subtle hover:text-text-charcoal hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-white text-text-subtle hover:text-red-500 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-background-soft transition-colors group cursor-pointer border border-transparent hover:border-border-soft">
+<div class="size-10 rounded bg-pink-50 border border-pink-100 flex items-center justify-center text-pink-500 shadow-sm">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-text-charcoal text-sm font-medium truncate">Brand_Jingle_Loop.wav</p>
+<p class="text-xs text-text-subtle">00:15 • 3.2MB</p>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-2 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-white text-text-subtle hover:text-text-charcoal hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-white text-text-subtle hover:text-red-500 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-2 border border-dashed border-border-soft rounded-lg p-6 flex items-center justify-center gap-2 text-sm text-text-subtle hover:text-accent-orange hover:border-accent-orange/50 hover:bg-accent-orange/5 transition-all cursor-pointer">
+<span class="material-symbols-outlined">upload_file</span>
+<span>Click to upload or drag files here</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

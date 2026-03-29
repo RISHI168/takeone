@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Sharing &amp; Collaboration</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "ivory": "#FFFFF0",
+                        "ivory-dark": "#F5F5E6",
+                        "charcoal": "#2A2A2A",
+                        "charcoal-light": "#4A4A4A",
+                        "neon-cyan": "#00FFFF",
+                        "neon-cyan-dim": "#00CCCC",
+                        "electric-orange": "#FF5F00",
+                        "electric-orange-hover": "#E04E00",
+                        "border-cyan": "#00FFFF",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFFF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E5D8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4D4C8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-display flex items-center justify-center min-h-screen p-4 bg-[url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&amp;w=2670&amp;auto=format&amp;fit=crop')] bg-cover bg-center bg-no-repeat relative">
+<div class="absolute inset-0 bg-white/40 backdrop-blur-md z-0"></div>
+<div class="relative z-10 w-full max-w-[640px] flex flex-col bg-ivory border border-neon-cyan/30 rounded-xl shadow-[0_0_40px_rgba(0,255,255,0.15)] overflow-hidden">
+<div class="flex items-center justify-between px-6 py-5 border-b border-gray-200 bg-ivory-dark/50 backdrop-blur-sm">
+<div>
+<h2 class="text-charcoal text-xl font-bold leading-tight">Share Project</h2>
+<p class="text-charcoal-light text-sm mt-1">Neon Genesis - v4.2.0</p>
+</div>
+<button class="text-charcoal-light hover:text-charcoal transition-colors p-2 rounded-lg hover:bg-gray-200/50 group">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-200">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto max-h-[80vh] bg-ivory">
+<div class="px-6 pt-6 pb-2">
+<div class="flex items-center justify-between mb-3">
+<label class="text-charcoal text-sm font-semibold">Project Visibility</label>
+</div>
+<div class="flex h-12 w-full items-center justify-center rounded-lg bg-gray-100 p-1 border border-gray-200">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-[4px] px-2 has-[:checked]:bg-neon-cyan has-[:checked]:text-charcoal has-[:checked]:shadow-sm has-[:checked]:font-bold text-charcoal-light text-sm font-medium transition-all duration-200 hover:bg-gray-200/50">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">lock</span>
+                            Private
+                        </span>
+<input class="invisible w-0 absolute" name="visibility" type="radio" value="Private"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-[4px] px-2 has-[:checked]:bg-neon-cyan has-[:checked]:text-charcoal has-[:checked]:shadow-sm has-[:checked]:font-bold text-charcoal-light text-sm font-medium transition-all duration-200 hover:bg-gray-200/50">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">groups</span>
+                            Team Access
+                        </span>
+<input checked="" class="invisible w-0 absolute" name="visibility" type="radio" value="Team Access"/>
+</label>
+</div>
+</div>
+<div class="px-6 py-4">
+<label class="text-charcoal text-sm font-semibold mb-3 block">Invite Collaborators</label>
+<div class="flex flex-col sm:flex-row gap-3 items-stretch">
+<div class="relative flex-grow">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-charcoal-light text-lg">mail</span>
+</div>
+<input class="w-full pl-10 pr-3 py-3 bg-white/50 border border-gray-300 rounded-lg text-charcoal placeholder-charcoal-light/60 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all text-sm backdrop-blur-sm" placeholder="Enter email addresses..." type="email"/>
+</div>
+<div class="relative min-w-[120px]">
+<select class="w-full h-full pl-3 pr-8 py-3 bg-white/50 border border-gray-300 rounded-lg text-charcoal focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan appearance-none cursor-pointer text-sm backdrop-blur-sm">
+<option>Editor</option>
+<option>Viewer</option>
+<option>Admin</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-charcoal-light">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<button class="bg-electric-orange hover:bg-electric-orange-hover text-white font-bold py-2 px-5 rounded-lg transition-colors flex items-center justify-center shadow-md shadow-electric-orange/20">
+                        Invite
+                    </button>
+</div>
+</div>
+<div class="mx-6 border-b border-gray-200"></div>
+<div class="px-6 py-5">
+<div class="flex items-center justify-between mb-3">
+<label class="text-charcoal text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-neon-cyan-dim text-lg">link</span>
+                        Shareable Link
+                    </label>
+<div class="relative">
+<select class="bg-transparent text-charcoal-light text-xs font-medium border-none focus:ring-0 pr-6 py-0 cursor-pointer hover:text-charcoal">
+<option class="bg-ivory">Anyone with link can view</option>
+<option class="bg-ivory">Anyone with link can comment</option>
+<option class="bg-ivory">Disabled</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-2 p-1.5 bg-white/50 border border-neon-cyan/40 rounded-lg backdrop-blur-sm">
+<div class="flex-1 px-3 py-2 text-sm text-charcoal-light truncate select-all">
+                        https://takeone.studio/p/neon-genesis-x89s
+                    </div>
+<button class="flex items-center gap-2 px-4 py-2 bg-ivory/80 border border-neon-cyan/30 hover:bg-neon-cyan/10 text-charcoal text-xs font-bold rounded transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base">content_copy</span>
+                        Copy
+                    </button>
+</div>
+</div>
+<div class="px-6 pb-6">
+<h3 class="text-charcoal-light text-xs font-bold uppercase tracking-wider mb-4">Project Members (4)</h3>
+<div class="space-y-1">
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="User avatar of a woman looking at camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsszbisIDfmDkKgdQG6KRs2ajSO6xorRpZsO-ILHnzkfGJqvZ_p--LMEYxJFI-m5BPYseHVGS2qHZrmNsEJHWlLG2hMLy1Vh6iqoOzbwYnOfykwRov5Po1Ai5d4vUn5E39KukP5QCpqHsYgHy_qbbF6YTAJCf-WkZUR3RO_u944IvwbjmIP7NUDOVBIpIYmEY5Frxo0yn2mxrSyyfM28C9tN6sQyPuW4zOctwohGmh9z1DYV0BPvKrJvbzcqqAkr4bFYz6w30YSQ"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+</div>
+<div>
+<div class="text-charcoal text-sm font-medium">Sarah Jenkins</div>
+<div class="text-charcoal-light text-xs">sarah@takeone.studio</div>
+</div>
+</div>
+<span class="text-xs font-medium text-charcoal-light bg-gray-200/60 px-2 py-1 rounded">Owner</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="User avatar of a man with serious expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc8GwHcabfo1zZNN7dHAmXGuuYlGSLTLjDddVqoWyx-ZrZGIcbO-eOi0GPbfVHTQC8KNJpslYHhtEW-49LMLpokUMh7znHZK3_L4QlRh3BSA2_F3XhxYWdaFzgHj-a32inJR5kIHcZMKqYhi1b63vuIFtOhH10GvbViCHPMKjX51x3CnBeXRZWJjd3gfh-1Fd3IYdmFFRauybOcOX-kU3dFqtEa8Wp8j0Ot1tiTZnPVkk5S03NHjfKqWT8h1Lczug0bNFMdQK7jg"/>
+</div>
+<div>
+<div class="text-charcoal text-sm font-medium">Marcus Chen</div>
+<div class="text-charcoal-light text-xs">marcus@design.co</div>
+</div>
+</div>
+<div class="relative group/dropdown">
+<button class="text-charcoal-light hover:text-charcoal text-xs font-medium flex items-center gap-1 py-1 px-2 rounded hover:bg-white border border-transparent hover:border-neon-cyan/30 transition-all">
+                                Editor <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-neon-cyan/20 border-2 border-white flex items-center justify-center text-charcoal font-bold text-sm">
+                                AL
+                            </div>
+<div>
+<div class="text-charcoal text-sm font-medium">Alex L</div>
+<div class="text-charcoal-light text-xs">alex@freelance.net</div>
+</div>
+</div>
+<div class="relative group/dropdown">
+<button class="text-charcoal-light hover:text-charcoal text-xs font-medium flex items-center gap-1 py-1 px-2 rounded hover:bg-white border border-transparent hover:border-neon-cyan/30 transition-all">
+                                Viewer <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="User avatar of a woman with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuf11X0wBHg5GIhJggR9oCHS2mGBOlyJ_hxd0w_bohqH3Ey3FKGOpn2MkWR_dHsUIwG1m_UIi-BHDg9q2agLohJRj8yytb3SA6-eOQTEoLKm9LBdHZm37_5Pc253zb_AnZYfThu8Mf8_p5OMk8dFW5A-uG89UjaGUfWnsJ5RvZhdYG_i4uFB6o-poKl2S_VD0MzjMkBUv_45z08M4ZbZG9duuL3FBqPdErxG9gAmpZKkIzZstxDMkN0fxsjw9svy9rdcaQziiFdQ"/>
+</div>
+<div>
+<div class="text-charcoal text-sm font-medium">Elena R</div>
+<div class="text-charcoal-light text-xs">elena@takeone.studio</div>
+</div>
+</div>
+<div class="relative group/dropdown">
+<button class="text-charcoal-light hover:text-charcoal text-xs font-medium flex items-center gap-1 py-1 px-2 rounded hover:bg-white border border-transparent hover:border-neon-cyan/30 transition-all">
+                                Admin <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 bg-ivory-dark/50 border-t border-gray-200 backdrop-blur-sm flex justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-charcoal-light hover:text-charcoal text-sm font-medium transition-colors hover:bg-gray-200/50">
+                Cancel
+            </button>
+<button class="px-6 py-2 rounded-lg bg-charcoal text-white hover:bg-charcoal/90 text-sm font-bold transition-colors shadow-lg shadow-charcoal/20">
+                Done
+            </button>
+</div>
+</div>
+
+</body></html>

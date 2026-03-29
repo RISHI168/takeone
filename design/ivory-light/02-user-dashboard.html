@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creator Dashboard - TakeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-ivory: #fcfcf7;
+            --bg-off-white: #f3f3ee;
+            --bg-card: #ffffff;
+            --bg-card-hover: #fcfcfc;
+            --accent-cyan: #06b6d4;
+            --accent-orange: #ff5e00;
+            --text-primary: #1a1a1a;
+            --text-secondary: #575757;
+            --border-color: #e2e2da;
+            --neon-cyan: #00e5ff;
+            --neon-orange: #ff7b00;
+            --neon-green: #00ff9d;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-ivory);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.05), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 123, 0, 0.05), transparent 40%);
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.1) 0%, transparent 100%);
+            color: #0891b2;
+            border-right: 3px solid var(--accent-cyan);
+            font-weight: 600;
+        }
+        .nav-item:hover:not(.active) {
+            color: var(--accent-cyan);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .card-gradient-border {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 1rem;
+            z-index: 1;
+            box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05);
+        }.neon-border-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .neon-border-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .cinema-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cinema-hover:hover {
+            transform: scale(1.03);
+            filter: contrast(1.05) saturate(1.1);
+        }.glass-sidebar {
+            background: rgba(243, 243, 238, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-slate-800">
+<aside class="w-72 glass-sidebar flex flex-col justify-between z-20 shadow-[2px_0_20px_-10px_rgba(0,0,0,0.05)]">
+<div>
+<div class="p-8 flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-xl bg-white flex items-center justify-center overflow-hidden border border-slate-200 shadow-md shadow-cyan-500/10">
+<div class="absolute inset-0 bg-gradient-to-br from-cyan-100 via-transparent to-orange-100 opacity-80"></div>
+<span class="material-symbols-outlined text-slate-800 relative z-10 text-xl">movie_filter</span>
+</div>
+<h1 class="font-bold text-xl tracking-wide text-slate-900">TAKEONE</h1>
+</div>
+<nav class="mt-8 space-y-1">
+<a class="nav-item active flex items-center px-8 py-4 text-sm transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-4 text-[22px]">dashboard</span>
+                Home
+            </a>
+<a class="nav-item flex items-center px-8 py-4 text-sm font-medium text-slate-500 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-4 text-[22px]">video_library</span>
+                My Projects
+            </a>
+<a class="nav-item flex items-center px-8 py-4 text-sm font-medium text-slate-500 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-4 text-[22px]">palette</span>
+                Brand Kits
+            </a>
+<a class="nav-item flex items-center px-8 py-4 text-sm font-medium text-slate-500 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-4 text-[22px]">credit_card</span>
+                Billing
+            </a>
+<a class="nav-item flex items-center px-8 py-4 text-sm font-medium text-slate-500 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-4 text-[22px]">settings</span>
+                Settings
+            </a>
+</nav>
+</div>
+<div class="p-6 border-t border-slate-200/50 bg-gradient-to-t from-white/50 to-transparent">
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/60 cursor-pointer transition-all border border-transparent hover:border-slate-200 group shadow-sm hover:shadow-md">
+<div class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-orange-400">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-white">
+<img alt="User Avatar" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWbIgKwf4hd9r1oQvG3ZtFhdElHkbGhN6xKG8W4ardfvUjzfhdrNBvOHXhlE1ffv1jct7D9Od2UcQjy-c1LucCOXSRXFk771MzWLEHYDklaOF0uAC_NqT27OWImQk0uJFOFdbBOp7aVyoUyWTNrhQdUgieO7UFEduw3PfHQWoVWfSWxxB5fRxvD_el7qib8CleWkgLPJ2rCmI6JiT7Wwq_qKZ-wmQF0EdNMAwz2Tr7lrPNV67bp7CUvacNo-_pL4CS6AjAoxhFHg"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 truncate">sarah@creator.com</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-[var(--bg-ivory)] relative">
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
+<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-cyan-200/20 rounded-full blur-[100px] mix-blend-multiply"></div>
+<div class="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] bg-orange-100/40 rounded-full blur-[120px] mix-blend-multiply"></div>
+</div>
+<div class="relative z-10 p-10 max-w-7xl mx-auto">
+<header class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-bold text-slate-900 mb-2 tracking-tight">Dashboard</h2>
+<p class="text-slate-500 text-base font-light">Welcome back, Sarah. Ready to manifest your vision?</p>
+</div>
+<div class="flex items-center gap-6">
+<button class="w-10 h-10 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-cyan-600 transition-all flex items-center justify-center relative shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2.5 w-2 h-2 bg-orange-500 rounded-full shadow-[0_0_5px_rgba(249,115,22,0.6)]"></span>
+</button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-14">
+<div class="lg:col-span-2 group relative rounded-2xl overflow-hidden shadow-xl shadow-cyan-900/5 transition-all hover:shadow-cyan-600/10 border border-slate-200 bg-white">
+<div class="absolute inset-0 bg-gradient-to-br from-white via-cyan-50/30 to-orange-50/30 z-0"></div>
+<div class="absolute right-0 top-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-cyan-100/40 via-transparent to-transparent opacity-60"></div>
+<div class="relative z-10 p-8 flex flex-col h-full justify-between">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-cyan-50 text-cyan-700 border border-cyan-200 mb-5 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                            AI Powered v2.0
+                        </div>
+<h3 class="text-3xl font-bold text-slate-900 mb-3 leading-tight">Create New Project</h3>
+<p class="text-slate-500 text-sm max-w-lg leading-relaxed font-normal">From vague concept to vivid reality. Let our AI neural network script, storyboard, and generate cinematic video in minutes.</p>
+</div>
+<div class="mt-8">
+<button class="bg-[var(--accent-orange)] hover:bg-[#e65500] text-white px-8 py-3.5 rounded-xl font-bold text-sm flex items-center transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 border border-orange-400/20">
+<span class="material-symbols-outlined mr-2.5">auto_awesome</span>
+                            Start Creation
+                        </button>
+</div>
+</div>
+</div>
+<div class="relative group bg-white border border-slate-200 rounded-2xl p-7 flex flex-col justify-between shadow-lg shadow-slate-200/50 overflow-hidden">
+<div class="absolute top-0 right-0 w-40 h-40 bg-orange-100/50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+<div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Credits Balance</h3>
+<button class="text-xs text-orange-600 hover:text-orange-700 font-semibold transition-colors">History</button>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-5xl font-bold text-slate-800 tracking-tighter">420</span>
+<span class="text-slate-400 text-sm">/ 500</span>
+</div>
+<p class="text-xs text-slate-400 font-mono mt-2">RESETS NOV 1, 2024</p>
+</div>
+<div class="mt-8 relative z-10">
+<div class="w-full bg-slate-100 rounded-full h-2 mb-3 overflow-hidden border border-slate-200/50">
+<div class="bg-gradient-to-r from-orange-400 to-amber-300 h-full rounded-full shadow-[0_0_10px_rgba(251,146,60,0.4)] relative" style="width: 65%">
+<div class="absolute top-0 right-0 h-full w-2 bg-white/50 blur-[1px]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-400 font-mono uppercase tracking-wider mb-5">
+<span>Used: 80</span>
+<span>Total: 500</span>
+</div>
+<button class="w-full border border-slate-200 hover:bg-slate-50 text-slate-600 hover:text-orange-600 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:border-orange-200">
+                        Top Up Credits
+                    </button>
+</div>
+</div>
+</div>
+<div class="mb-8 flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-200 pb-4">
+<h3 class="text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
+                Recent Projects
+                <span class="text-xs font-medium text-slate-500 px-2 py-1 bg-slate-100 rounded-md border border-slate-200">12 Total</span>
+</h3>
+<div class="flex gap-3 w-full md:w-auto">
+<div class="relative flex-1 md:flex-none group">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-lg group-focus-within:text-cyan-500 transition-colors">search</span>
+</span>
+<input class="bg-white border border-slate-200 text-slate-700 text-sm rounded-xl focus:ring-2 focus:ring-cyan-100 focus:border-cyan-400 block pl-10 p-2.5 w-full md:w-64 placeholder-slate-400 transition-all shadow-sm" placeholder="Search projects..." type="text"/>
+</div>
+<button class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-cyan-600 p-2.5 rounded-xl transition-all shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined text-xl">tune</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="neon-border-card rounded-xl overflow-hidden shadow-sm group">
+<div class="aspect-[16/9] relative overflow-hidden bg-slate-100">
+<img alt="Cold Brew" class="w-full h-full object-cover group-hover:opacity-100 cinema-hover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4mTazfQERg2WbSR7IowSxXz98atoP5_Exd6fU6Zn00O0Ofksz3URLIOAz4IPmQe5GYyHgaPDhG26bp7muvt5k4undSND0iAKcz2AcrivEHW_ameGeGtbmDBSBTT3iZJ2H3kp8NcKP1IWlHTtznb7l5uo0v9DDP1WGR94ZmMiHK77wE10mSfDzoEIbsmAHUMDz4AIemRZ9Rbl-IoiEfx4-r-M2qo6s66BFWq4GuA7DiRpzx5yjKxsUC8WQoupAjRlztsJ9DUDlng"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 bg-white/90 backdrop-blur-md text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded border border-emerald-200 shadow-sm">Completed</span>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="bg-white/80 backdrop-blur-md hover:bg-white text-cyan-600 rounded-full w-12 h-12 flex items-center justify-center border border-white shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+<span class="material-symbols-outlined text-2xl fill-1">play_arrow</span>
+</button>
+</div>
+</div>
+<div class="p-5 bg-white">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-800 truncate pr-2 text-base group-hover:text-cyan-600 transition-colors">Cold Brew Tutorial</h4>
+<button class="text-slate-400 hover:text-cyan-600 transition-colors"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">High contrast cafe b-roll with ambient lighting.</p>
+<div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 font-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>2H AGO</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+<span>REELS</span>
+</div>
+</div>
+</div>
+</div>
+<div class="neon-border-card rounded-xl overflow-hidden shadow-sm border-cyan-200 shadow-cyan-100/50">
+<div class="aspect-[16/9] relative bg-slate-50 overflow-hidden">
+<div class="absolute inset-0 shimmer opacity-60 z-10"></div>
+<div class="absolute inset-0 flex flex-col items-center justify-center z-20 bg-white/60 backdrop-blur-[2px]">
+<div class="w-10 h-10 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+<p class="text-xs text-cyan-700 font-bold tracking-wide uppercase animate-pulse">Generating Visuals</p>
+</div>
+<img alt="Background" class="w-full h-full object-cover opacity-60 blur-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaXpaJ6f0wQoUWOSu25OEOb05CHLbKUHEZf6o3bV8MLCx6cON6bU3s4gZKfphtdkytaHh_uGr0DkOGjMPmdOeCBBlps_oI2-Hv-GspZfwNswphgzlhm8EpdxoJxe4gXPn1EVn-FF30NuPFm95TCCy3TeZ9l_3ZyIy_MyV4Ft3RY5G2oouUJsPL4LtddDccBp8NUIWciJChG2lI0ffvOpeoPVjU6XkZE50ZNLbKRl8ojRLue6AkOPrw6rDzajZTpFYecV72W4VVdw"/>
+<div class="absolute top-3 left-3 z-30">
+<span class="px-2.5 py-1 bg-white/90 backdrop-blur-md text-cyan-600 text-[10px] font-bold uppercase tracking-wider rounded border border-cyan-200">Processing</span>
+</div>
+</div>
+<div class="p-5 bg-white">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-800 truncate pr-2 text-base">Tech Product Launch</h4>
+<button class="text-slate-400 hover:text-cyan-600 transition-colors"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">Neon cyber aesthetic product shots for X1 headphones.</p>
+<div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 font-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>5M AGO</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+<span class="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
+<span>TIKTOK</span>
+</div>
+</div>
+</div>
+</div>
+<div class="neon-border-card rounded-xl overflow-hidden shadow-sm group hover:-translate-y-1">
+<div class="aspect-[16/9] relative bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors relative overflow-hidden border-b border-slate-100">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, rgba(0,0,0,0.15) 1px, transparent 0); background-size: 20px 20px;"></div>
+<span class="material-symbols-outlined text-slate-300 text-5xl group-hover:text-slate-400 transition-colors relative z-10">description</span>
+<div class="absolute top-3 left-3 z-20">
+<span class="px-2.5 py-1 bg-slate-200/50 backdrop-blur-md text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded border border-slate-300/50">Draft</span>
+</div>
+</div>
+<div class="p-5 bg-white">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-800 truncate pr-2 text-base group-hover:text-cyan-600 transition-colors">Summer Sale Promo</h4>
+<button class="text-slate-400 hover:text-cyan-600 transition-colors"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">Upbeat promo video for end of season sale.</p>
+<div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 font-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">edit_calendar</span>
+<span>1D AGO</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+<span>YOUTUBE</span>
+</div>
+</div>
+</div>
+</div>
+<div class="neon-border-card rounded-xl overflow-hidden shadow-sm group">
+<div class="aspect-[16/9] relative overflow-hidden bg-slate-100">
+<img alt="Dashboard" class="w-full h-full object-cover group-hover:opacity-100 cinema-hover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQUL1oPOIX2ioKvCLyZDj7C1XbIskpCkNdKgRbskG_WgwUQLOCD3ZQ8Cp-AS5fU1y2rvmQrUq-V3nPEQ6yzFT4eHXX0HkrRYjlNXLRaMP80ab6GOG8hik8yfxIGoFm0APkWs-gFJiryH5FkW0kV2SNyc9yYW0UCopGddj45Ptrb7uXzJWMdBBohRfXPNARd7LD2g-iIkDoBSRv1FftK-4abad2HguoTMLnN_dR4QeMBCQPPyJg0EOeJFUPfAivMslxIQ5i5Yp7DA"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 bg-white/90 backdrop-blur-md text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded border border-emerald-200 shadow-sm">Completed</span>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="bg-white/80 backdrop-blur-md hover:bg-white text-cyan-600 rounded-full w-12 h-12 flex items-center justify-center border border-white shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+<span class="material-symbols-outlined text-2xl fill-1">play_arrow</span>
+</button>
+</div>
+</div>
+<div class="p-5 bg-white">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-800 truncate pr-2 text-base group-hover:text-cyan-600 transition-colors">Weekly Update V2</h4>
+<button class="text-slate-400 hover:text-cyan-600 transition-colors"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">Corporate style update with clean motion graphics.</p>
+<div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 font-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>3D AGO</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+<span>LINKEDIN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

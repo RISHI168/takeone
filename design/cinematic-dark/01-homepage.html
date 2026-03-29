@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TakeOne - AI Creative Video Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-dark: #000000;
+            --bg-card: #0a0a0a;
+            --primary-blue: #3B82F6;
+            --primary-orange: #F97316;
+            --primary-magenta: #EC4899;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }.cinematic-glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(249, 115, 22, 0.3);
+        }
+        .cinematic-gradient-text {
+            background: linear-gradient(to right, #60A5FA, #F472B6, #FB923C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cinematic-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cinematic-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px -5px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+        .spotlight-gradient {
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+        }
+        .vibrant-gradient-bg {
+             background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0) 50%),
+                         radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.15) 0%, rgba(0,0,0,0) 40%),
+                         radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.1) 0%, rgba(0,0,0,0) 40%);
+        }.btn-cinematic {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-cinematic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-cinematic:hover::before {
+            left: 100%;
+        }
+        .btn-primary-glow {
+            background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .btn-primary-glow:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+            transform: scale(1.02);
+        }
+        .hero-image-glow {
+            box-shadow: 0 0 60px -10px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-dark)] min-h-screen relative text-white selection:bg-blue-500 selection:text-white">
+<div class="grain-overlay"></div>
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-[-20%] left-[20%] w-[60%] h-[60%] bg-blue-600/10 rounded-full blur-[150px] opacity-60 mix-blend-screen"></div>
+<div class="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-orange-500/10 rounded-full blur-[150px] opacity-50 mix-blend-screen"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-600/10 rounded-full blur-[150px] opacity-40 mix-blend-screen"></div>
+</div>
+<nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-2 group cursor-pointer">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+<span class="material-symbols-outlined text-white text-lg">movie_filter</span>
+</div>
+<span class="font-bold text-xl tracking-wide font-['Space_Grotesk'] text-white">TAKE<span class="text-blue-400">ONE</span></span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors hover:shadow-[0_0_10px_rgba(255,255,255,0.3)]" href="#">Features</a>
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors" href="#">How it Works</a>
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors" href="#">Pricing</a>
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors" href="#">Showcase</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden sm:block" href="#">Sign In</a>
+<a class="group relative px-6 py-2 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]" href="#">
+<span class="relative z-10 flex items-center gap-2">
+                    Start Creating
+                    <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+</span>
+</a>
+</div>
+</div>
+</nav>
+<header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 z-10 overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full spotlight-gradient pointer-events-none opacity-50"></div>
+<div class="max-w-6xl mx-auto text-center relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 text-blue-300 text-xs font-bold tracking-wider uppercase mb-8 shadow-[0_0_15px_rgba(59,130,246,0.3)] backdrop-blur-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse box-shadow-[0_0_10px_#60A5FA]"></span>
+            v1.0 Now Available
+        </div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8 tracking-tight text-white drop-shadow-2xl">
+            From idea to <br class="md:hidden"/>
+<span class="cinematic-gradient-text cinematic-glow-text">polished reel</span> <br class="hidden md:block"/> 
+            in 10 minutes.
+        </h1>
+<p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+            The world's first role-based AI creative studio. Collaborative AI agents that write, storyboard, film, and edit professional short-form content with cinematic precision.
+        </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24">
+<a class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-[0_0_40px_-5px_rgba(79,70,229,0.5)] flex items-center justify-center gap-2 border border-blue-400/20" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+                Start Creating for Free
+            </a>
+<a class="w-full sm:w-auto px-8 py-4 btn-cinematic text-white font-medium rounded-lg backdrop-blur-md flex items-center justify-center gap-2 hover:border-white/30" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+                Watch Demo
+            </a>
+</div>
+<div class="relative max-w-5xl mx-auto rounded-xl border border-white/10 bg-[#050505] shadow-2xl hero-image-glow overflow-hidden group perspective-1000">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-70"></div>
+<div class="p-4 border-b border-white/5 flex items-center justify-between bg-black/40 backdrop-blur-sm">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-white/10"></div>
+<div class="w-3 h-3 rounded-full bg-white/10"></div>
+<div class="w-3 h-3 rounded-full bg-white/10"></div>
+</div>
+<div class="text-xs font-mono text-gray-600">TAKEONE_v1.0.exe</div>
+<div class="w-10"></div>
+</div>
+<div class="aspect-video bg-[#020202] relative flex overflow-hidden">
+<div class="hidden md:flex w-16 flex-col items-center py-6 border-r border-white/5 bg-black/20 gap-6 z-10 backdrop-blur-sm">
+<div class="w-10 h-10 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+<span class="material-symbols-outlined text-xl">edit_note</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-600 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">view_timeline</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-600 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">videocam</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-600 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">movie_edit</span>
+</div>
+</div>
+<div class="flex-1 relative">
+<div class="absolute top-6 left-6 right-6 z-20">
+<div class="h-14 w-full bg-black/60 backdrop-blur-xl rounded-lg border border-white/10 flex items-center px-6 shadow-lg">
+<span class="text-blue-400 mr-3 animate-pulse">▋</span>
+<span class="text-gray-300 text-sm font-mono tracking-wide">Create a cinematic sci-fi scene with neon lighting...</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-black">
+<img alt="Cinematic Sci-Fi Visor" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-lighten" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWWP5k5bl84aWlAR37F_d6a55EvTqx7D2IC2LClIonM2sIfZAYO_A-PqJA62hLuW3WktA8dudV2Wm7apVto6c27HW9dKo1TLyOvrMn-TmQdXFFDDeWVWuSx6eWlVi2LUt0I2fEeXNYu5uiqpyECew0AkTbJrCBHpkbmHqLAJzgUyiMNnnZMlSL_NJKJN2ufhNZI0lCsjNziQFunvkANCy5ULH6h1CyarwvrIC-7OjbofohxpFzMcQdyretrMkWsVtI7v8f7MmsbA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+<span class="material-symbols-outlined text-white text-4xl ml-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
+<div class="flex justify-between items-end mb-3">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded text-[10px] bg-blue-600 text-white font-mono font-bold tracking-wider">SCENE 01</span>
+<span class="px-2 py-0.5 rounded text-[10px] bg-white/10 border border-white/10 text-gray-300 font-mono">RAW_FOOTAGE</span>
+</div>
+<span class="text-xs font-mono text-gray-400">00:12:45 / 00:30:00</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-1/3 bg-gradient-to-r from-blue-500 to-purple-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden lg:flex w-72 border-l border-white/5 bg-black/40 backdrop-blur-md flex-col p-4 gap-3 z-10">
+<div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Agent Activity</div>
+<div class="p-3 rounded-lg bg-white/5 border border-white/5 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></div>
+<div class="flex-1">
+<div class="text-xs font-bold text-gray-200">Scriptwriter</div>
+<div class="text-[10px] text-gray-500 mt-1">Status: Complete</div>
+</div>
+<span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+</div>
+<div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center gap-3 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-[shimmer_2s_infinite]"></div>
+<div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_#60A5FA]"></div>
+<div class="flex-1">
+<div class="text-xs font-bold text-blue-200">Cinematographer</div>
+<div class="text-[10px] text-blue-400 mt-1">Rendering Frame 84...</div>
+</div>
+<span class="material-symbols-outlined text-blue-400 text-sm animate-spin">sync</span>
+</div>
+<div class="p-3 rounded-lg bg-white/5 border border-white/5 flex items-center gap-3 opacity-50">
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="flex-1">
+<div class="text-xs font-bold text-gray-400">Reel Editor</div>
+<div class="text-[10px] text-gray-600 mt-1">Waiting for assets</div>
+</div>
+<span class="material-symbols-outlined text-gray-600 text-sm">pending</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-20 border-t border-white/5 pt-10">
+<p class="text-xs text-gray-500 mb-8 uppercase tracking-[0.2em] text-center font-bold">Powering Next-Gen Creators On</p>
+<div class="flex flex-wrap justify-center gap-8 md:gap-20 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+<span class="text-xl font-bold font-['Space_Grotesk'] flex items-center gap-2 hover:text-white transition-colors"><span class="material-symbols-outlined">music_note</span> TikTok</span>
+<span class="text-xl font-bold font-['Space_Grotesk'] flex items-center gap-2 hover:text-white transition-colors"><span class="material-symbols-outlined">photo_camera</span> Instagram</span>
+<span class="text-xl font-bold font-['Space_Grotesk'] flex items-center gap-2 hover:text-white transition-colors"><span class="material-symbols-outlined">play_arrow</span> YouTube</span>
+<span class="text-xl font-bold font-['Space_Grotesk'] flex items-center gap-2 hover:text-white transition-colors"><span class="material-symbols-outlined">work</span> LinkedIn</span>
+</div>
+</div>
+</header>
+<section class="py-32 relative z-10" id="how-it-works">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-24">
+<h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Meet Your <span class="cinematic-gradient-text">AI Production Team</span></h2>
+<p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Four specialized agents working in harmony to turn your prompt into a masterpiece. It's not just generation; it's orchestration.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="cinematic-card p-8 rounded-2xl group hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-900/50 to-blue-800/20 border border-blue-500/20 flex items-center justify-center mb-8 shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)] group-hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] transition-all">
+<span class="material-symbols-outlined text-blue-400 text-3xl">edit_note</span>
+</div>
+<h3 class="text-xl font-bold mb-3 font-['Space_Grotesk'] text-white group-hover:text-blue-400 transition-colors">Scriptwriter</h3>
+<p class="text-sm text-gray-400 mb-6 leading-relaxed">Converts prompts into viral hooks, engaging bodies, and clear CTAs optimized for retention.</p>
+<div class="h-[1px] w-full bg-gradient-to-r from-blue-500/50 to-transparent mb-4"></div>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-blue-500 text-[16px]">check_circle</span>
+                        Hook Optimization
+                    </li>
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-blue-500 text-[16px]">check_circle</span>
+                        Pacing Analysis
+                    </li>
+</ul>
+</div>
+<div class="cinematic-card p-8 rounded-2xl group hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-900/50 to-pink-800/20 border border-pink-500/20 flex items-center justify-center mb-8 shadow-[0_0_20px_-5px_rgba(236,72,153,0.3)] group-hover:shadow-[0_0_30px_-5px_rgba(236,72,153,0.5)] transition-all">
+<span class="material-symbols-outlined text-pink-400 text-3xl">view_timeline</span>
+</div>
+<h3 class="text-xl font-bold mb-3 font-['Space_Grotesk'] text-white group-hover:text-pink-400 transition-colors">Storyboard Artist</h3>
+<p class="text-sm text-gray-400 mb-6 leading-relaxed">Plans every shot with composition, lighting, and camera angle notes before generation begins.</p>
+<div class="h-[1px] w-full bg-gradient-to-r from-pink-500/50 to-transparent mb-4"></div>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-pink-500 text-[16px]">check_circle</span>
+                        Visual Continuity
+                    </li>
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-pink-500 text-[16px]">check_circle</span>
+                        Transition Logic
+                    </li>
+</ul>
+</div>
+<div class="cinematic-card p-8 rounded-2xl group hover:-translate-y-2 relative overflow-hidden border-purple-500/30">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all"></div>
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-900/50 to-purple-800/20 border border-purple-500/20 flex items-center justify-center mb-8 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.5)] transition-all relative z-10">
+<span class="material-symbols-outlined text-purple-400 text-3xl">camera_outdoor</span>
+</div>
+<h3 class="text-xl font-bold mb-3 font-['Space_Grotesk'] text-white group-hover:text-purple-400 transition-colors relative z-10">Cinematographer</h3>
+<p class="text-sm text-gray-400 mb-6 leading-relaxed relative z-10">Generates photorealistic or stylized visuals consistent with your brand identity.</p>
+<div class="h-[1px] w-full bg-gradient-to-r from-purple-500/50 to-transparent mb-4 relative z-10"></div>
+<ul class="space-y-3 relative z-10">
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-purple-500 text-[16px]">check_circle</span>
+                        Character Consistency
+                    </li>
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-purple-500 text-[16px]">check_circle</span>
+                        Lighting Simulation
+                    </li>
+</ul>
+</div>
+<div class="cinematic-card p-8 rounded-2xl group hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-900/50 to-orange-800/20 border border-orange-500/20 flex items-center justify-center mb-8 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)] group-hover:shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] transition-all">
+<span class="material-symbols-outlined text-orange-400 text-3xl">movie_edit</span>
+</div>
+<h3 class="text-xl font-bold mb-3 font-['Space_Grotesk'] text-white group-hover:text-orange-400 transition-colors">Reel Editor</h3>
+<p class="text-sm text-gray-400 mb-6 leading-relaxed">Assembles shots, applies smooth transitions, and syncs pacing perfectly to the audio track.</p>
+<div class="h-[1px] w-full bg-gradient-to-r from-orange-500/50 to-transparent mb-4"></div>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-orange-500 text-[16px]">check_circle</span>
+                        Auto-Captions
+                    </li>
+<li class="flex items-center gap-3 text-xs text-gray-300 font-mono">
+<span class="material-symbols-outlined text-orange-500 text-[16px]">check_circle</span>
+                        Export to 4K
+                    </li>
+</ul>
+</div>
+</div>
+<div class="hidden lg:flex items-center justify-center mt-20 opacity-40">
+<div class="h-[1px] w-full max-w-2xl bg-gradient-to-r from-transparent via-white to-transparent"></div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-[#020202] border-t border-white/5 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.05),transparent_40%)]"></div>
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<h2 class="text-3xl md:text-5xl font-bold mb-8">Workflow Graph Intelligence</h2>
+<p class="text-gray-400 mb-10 leading-relaxed text-lg font-light">
+                    Unlike generic AI tools that just generate isolated assets, TakeOne maintains a 
+                    <span class="text-blue-400 font-semibold border-b border-blue-500/50 pb-0.5">deep context graph</span>. 
+                    If you change the script, the Storyboard Artist automatically updates the shot list, 
+                    and the Cinematographer knows to regenerate affected visuals.
+                </p>
+<div class="space-y-6">
+<div class="flex gap-5 p-6 rounded-xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-colors group cursor-default">
+<div class="mt-1 p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+<span class="material-symbols-outlined text-blue-400">account_tree</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-2 text-white">Context Aware Memory</h4>
+<p class="text-sm text-gray-400 leading-relaxed">Agents understand the full project history, keeping track of characters, locations, and object permanence.</p>
+</div>
+</div>
+<div class="flex gap-5 p-6 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/30 transition-colors group cursor-default">
+<div class="mt-1 p-2 rounded-lg bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors">
+<span class="material-symbols-outlined text-purple-400">palette</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-2 text-white">Unified Brand Kits</h4>
+<p class="text-sm text-gray-400 leading-relaxed">Lock in your color palette, fonts, and tone of voice once. Every agent respects your style guide automatically.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square max-w-md mx-auto relative perspective-1000">
+<div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-[60px] animate-pulse"></div>
+<div class="relative z-10 grid grid-cols-2 gap-6 h-full p-4">
+<div class="bg-[#0A0A0E]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 flex flex-col justify-between transform translate-y-8 shadow-2xl hover:border-blue-500/30 transition-all duration-500">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-4"><span class="material-symbols-outlined text-2xl text-gray-400">description</span></div>
+<div>
+<div class="h-2 w-12 bg-gray-800 rounded mb-2"></div>
+<div class="h-2 w-24 bg-gray-800 rounded"></div>
+</div>
+</div>
+<div class="bg-[#0A0A0E]/90 backdrop-blur-xl rounded-2xl border border-blue-500/50 p-6 flex flex-col justify-between shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)] z-20 hover:scale-105 transition-all duration-500">
+<div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-4"><span class="material-symbols-outlined text-2xl text-blue-500">movie</span></div>
+<div>
+<div class="h-2 w-12 bg-blue-900/50 rounded mb-2"></div>
+<div class="h-2 w-20 bg-blue-900/30 rounded"></div>
+</div>
+</div>
+<div class="bg-[#0A0A0E]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 flex flex-col justify-between transform -translate-y-8 shadow-2xl hover:border-purple-500/30 transition-all duration-500">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-4"><span class="material-symbols-outlined text-2xl text-gray-400">image</span></div>
+<div>
+<div class="h-2 w-12 bg-gray-800 rounded mb-2"></div>
+<div class="h-2 w-24 bg-gray-800 rounded"></div>
+</div>
+</div>
+<div class="bg-[#0A0A0E]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 flex flex-col justify-between shadow-2xl hover:border-orange-500/30 transition-all duration-500">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-4"><span class="material-symbols-outlined text-2xl text-gray-400">tune</span></div>
+<div>
+<div class="h-2 w-12 bg-gray-800 rounded mb-2"></div>
+<div class="h-2 w-24 bg-gray-800 rounded"></div>
+</div>
+</div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-black/50 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] z-30">
+<span class="material-symbols-outlined text-4xl text-white animate-pulse">hub</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32" id="pricing">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-20">
+<h2 class="text-3xl md:text-5xl font-bold mb-6">Quality vs Cost? <span class="text-blue-500">Why not both.</span></h2>
+<p class="text-gray-400 text-lg">Stop paying $500 per video or spending 6 hours in Premiere Pro.</p>
+</div>
+<div class="overflow-hidden rounded-2xl border border-white/10 bg-[#050505] shadow-2xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/10 bg-white/5">
+<th class="p-8 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Platform</th>
+<th class="p-8 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Method</th>
+<th class="p-8 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Est. Cost</th>
+<th class="p-8 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Workflow</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="bg-blue-900/10 border-b border-blue-500/20 relative">
+<td class="p-8 font-bold text-white flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-400">check_circle</span>
+<span class="text-lg">TakeOne</span>
+<span class="px-2 py-0.5 rounded text-[10px] bg-blue-500/20 text-blue-300 font-normal border border-blue-500/30">RECOMMENDED</span>
+</td>
+<td class="p-8 text-gray-300">End-to-End AI Agent Workflow</td>
+<td class="p-8 text-green-400 font-bold text-lg">$8.50 <span class="text-gray-500 font-normal text-xs">/ video</span></td>
+<td class="p-8 text-gray-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-500 text-sm">bolt</span> Automated (10 mins)
+                            </td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="p-8 text-gray-400">Traditional Agency</td>
+<td class="p-8 text-gray-500">Human Team</td>
+<td class="p-8 text-gray-400">$500 - $5,000</td>
+<td class="p-8 text-gray-500">Manual (1-2 weeks)</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="p-8 text-gray-400">DIY (Premiere/CapCut)</td>
+<td class="p-8 text-gray-500">You + 5 different tools</td>
+<td class="p-8 text-gray-400">$100/mo + Your Time</td>
+<td class="p-8 text-gray-500">Manual (4-6 hours)</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-8 text-gray-400">Generic AI Video</td>
+<td class="p-8 text-gray-500">Random clip generation</td>
+<td class="p-8 text-gray-400">$15 - $30</td>
+<td class="p-8 text-gray-500">No context/Assembly</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-16 text-center">
+<a class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium transition-colors hover:translate-x-1 duration-300" href="#">
+                View Full Pricing Plans
+                <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<section class="py-32 relative overflow-hidden bg-black">
+<div class="absolute inset-0 vibrant-gradient-bg opacity-30"></div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+<div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+<h2 class="text-5xl md:text-7xl font-bold mb-10 font-['Space_Grotesk'] leading-tight">Ready to crush your <br/><span class="text-white">content goals?</span></h2>
+<p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-light">Join 25,000+ creators producing studio-quality reels purely with AI.</p>
+<div class="flex flex-col items-center gap-6">
+<a class="px-12 py-6 bg-white text-black font-bold rounded-full text-xl hover:scale-105 transition-transform shadow-[0_0_50px_-10px_rgba(255,255,255,0.5)] flex items-center gap-3 group" href="#">
+                Start Creating Now
+                <span class="material-symbols-outlined group-hover:rotate-45 transition-transform">rocket_launch</span>
+</a>
+<p class="text-sm text-gray-500 font-mono tracking-wide">NO CREDIT CARD REQUIRED • 500 CREDITS FREE</p>
+</div>
+</div>
+</section>
+<footer class="border-t border-white/5 bg-[#050505] pt-24 pb-12 relative">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-8">
+<span class="font-bold text-2xl tracking-wide font-['Space_Grotesk'] text-white">TAKE<span class="text-blue-500">ONE</span></span>
+</div>
+<p class="text-gray-500 text-sm leading-relaxed mb-6">
+                    The operating system for AI-native creators. From idea to export in minutes.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-lg">public</span></a>
+<a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-lg">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-white mb-8 tracking-wide">Product</h4>
+<ul class="space-y-4 text-sm text-gray-500">
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Agents</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Brand Kits</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Showcase</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white mb-8 tracking-wide">Resources</h4>
+<ul class="space-y-4 text-sm text-gray-500">
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Documentation</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">API Reference</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Community</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Blog</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white mb-8 tracking-wide">Legal</h4>
+<ul class="space-y-4 text-sm text-gray-500">
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Terms of Service</a></li>
+<li><a class="hover:text-blue-400 transition-colors flex items-center gap-2" href="#">Copyright</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-gray-600 font-mono">© 2026 TakeOne Inc. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs text-green-500 font-mono">ALL SYSTEMS OPERATIONAL</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

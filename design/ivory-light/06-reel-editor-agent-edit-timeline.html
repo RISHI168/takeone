@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Reel Editor &amp; Review - TakeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-ivory: #FFFFF0;
+            --bg-panel: rgba(255, 255, 255, 0.65);
+            --bg-hover: rgba(6, 182, 212, 0.08);
+            --border-color: rgba(6, 182, 212, 0.4);
+            --border-glow: 0 4px 20px rgba(6, 182, 212, 0.1);
+            --accent-primary: #06b6d4;
+            --accent-secondary: #f97316;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --timeline-track: rgba(255, 255, 255, 0.8);
+            --glass-blur: blur(20px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-ivory);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            z-index: 50;
+            mix-blend-mode: multiply;
+        }
+        .glass-panel {
+            background: var(--bg-panel);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--border-glow);
+        }
+        .glow-border {
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
+        }
+        .neon-text {
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 2px 5px rgba(6, 182, 212, 0.3);
+            cursor: pointer;
+            margin-top: -6px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.4);
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex flex-col selection:bg-cyan-200 selection:text-cyan-900">
+<header class="h-14 glass-panel border-b border-[var(--border-color)] flex items-center justify-between px-4 shrink-0 z-30 relative bg-white/70">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-[var(--accent-primary)] drop-shadow-sm">
+<span class="material-symbols-outlined filled text-2xl">movie_filter</span>
+<span class="font-bold text-lg tracking-tight text-slate-800 neon-text">TAKE<span class="text-cyan-600 font-normal ml-1">ONE</span></span>
+</div>
+<div class="h-6 w-px bg-slate-300 mx-2"></div>
+<div class="flex items-center gap-2 text-sm">
+<span class="text-slate-500">Projects /</span>
+<span class="font-medium text-slate-800">Cold Brew Coffee Tutorial</span>
+<span class="bg-amber-100 text-amber-600 text-[10px] px-1.5 py-0.5 rounded border border-amber-200 ml-2 shadow-sm font-semibold">DRAFT</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-[var(--accent-secondary)] transition-colors" title="Toggle Theme">
+<span class="material-symbols-outlined text-[20px] filled">light_mode</span>
+</button>
+<div class="flex items-center gap-2 text-xs text-slate-600 bg-white/60 px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-sm text-[var(--accent-primary)]">schedule</span>
+<span>Est. Duration: 00:32</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600 bg-white/60 px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-sm text-[var(--accent-secondary)]">credit_card</span>
+<span>Credits Used: 85</span>
+</div>
+<button class="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center text-xs font-bold text-white shadow-md border border-white/20">
+            SC
+        </button>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden relative z-10">
+<aside class="w-16 lg:w-64 glass-panel border-r border-[var(--border-color)] flex flex-col shrink-0 bg-white/50">
+<nav class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<div class="px-4 mb-2 text-xs font-bold text-cyan-600 uppercase tracking-widest hidden lg:block">Project Workflow</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-cyan-700 hover:bg-cyan-50 transition-all group border-l-2 border-transparent hover:border-cyan-300" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="hidden lg:block font-medium">Script</span>
+<span class="ml-auto hidden lg:flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-600 text-xs border border-green-200">
+<span class="material-symbols-outlined text-sm">check</span>
+</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-cyan-700 hover:bg-cyan-50 transition-all group border-l-2 border-transparent hover:border-cyan-300" href="#">
+<span class="material-symbols-outlined">view_kanban</span>
+<span class="hidden lg:block font-medium">Storyboard</span>
+<span class="ml-auto hidden lg:flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-600 text-xs border border-green-200">
+<span class="material-symbols-outlined text-sm">check</span>
+</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-cyan-700 hover:bg-cyan-50 transition-all group border-l-2 border-transparent hover:border-cyan-300" href="#">
+<span class="material-symbols-outlined">image</span>
+<span class="hidden lg:block font-medium">Visuals</span>
+<span class="ml-auto hidden lg:flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-600 text-xs border border-green-200">
+<span class="material-symbols-outlined text-sm">check</span>
+</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-cyan-50 text-cyan-700 border-l-2 border-[var(--accent-primary)] transition-colors shadow-[inset_4px_0_10px_-4px_rgba(6,182,212,0.1)]" href="#">
+<span class="material-symbols-outlined filled drop-shadow-sm">movie_edit</span>
+<span class="hidden lg:block font-semibold">Reel Editor</span>
+</a>
+<div class="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent mx-4 my-2"></div>
+<div class="px-4 mb-2 text-xs font-bold text-cyan-600 uppercase tracking-widest hidden lg:block">Shot List</div>
+<div class="flex-1 overflow-y-auto px-2 space-y-2 hidden lg:block custom-scrollbar">
+<div class="flex gap-3 p-2 rounded-lg hover:bg-white/60 cursor-pointer border border-transparent hover:border-cyan-200 transition-all group">
+<div class="w-16 h-16 bg-slate-100 rounded overflow-hidden shrink-0 relative border border-slate-200 group-hover:border-cyan-300 transition-colors shadow-sm">
+<img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBB_A6INKEbABLF4VAPNDXnCuGuIFvfYe5Vb4OWut2Z6Nd4NYpDwfQ08wkqY1aYmwo2MW976I078dDyuvhbZGx2SAhnLfd5iiCmI4XBoOF-CsUTmHrBq0qqr0JKgjEIY1OlEu4Pkt0N9rXPsPLWpitd0UEnG1QgNUheGJmQKRldFtlM-0KMYhqVfZ89WeMQGSHAQKdsAZSz_-GrDqGQKzclB51wTSzyapGfEdfGJ5_q0cmGKK-W67_U8ee5b8yqc6-ugSX2IcycQ"/>
+<div class="absolute bottom-0 right-0 bg-white/90 px-1.5 text-[9px] text-slate-700 backdrop-blur-sm border-tl border-slate-100 font-mono">00:03</div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<span class="text-xs font-semibold text-slate-700 group-hover:text-cyan-700 transition-colors">Shot 1: Hook</span>
+<span class="text-[10px] text-slate-500 truncate">Close-up coffee beans...</span>
+<div class="flex gap-2 mt-1">
+<span class="bg-cyan-50 border border-cyan-100 text-cyan-600 text-[9px] px-1.5 rounded">Zoom In</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 p-2 rounded-lg bg-white/80 border border-cyan-300 shadow-[0_2px_8px_rgba(6,182,212,0.1)] cursor-pointer transition-all">
+<div class="w-16 h-16 bg-slate-100 rounded overflow-hidden shrink-0 relative border border-cyan-400 ring-2 ring-cyan-100">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQRUQaITu2LZSIhCUl9D3XAmwt8D3USH6B3IbqVQ-i9zGwDxhFlOEwIAIB9Afu6-wCoPcBzUgoCagjvt7ypjRj2abcvSNK_LRz55BVp5Wv7-qumSCH83YMmZ2tIKvwPNicUN40pkKVDylY8XN5BIoIT_VI7lpGZORAwkq2o5MfGzYyS2dMUj6POroUZEnsjiAidvPp5LZfaQz_9foEQgRhDAjzqLdIGlsd8Ngns56GKH41jpk4naJszH5IsDoze4xE3gDLYkQdWw"/>
+<div class="absolute bottom-0 right-0 bg-white/90 px-1.5 text-[9px] text-slate-700 backdrop-blur-sm border-tl border-slate-100 font-mono">00:05</div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<span class="text-xs font-semibold text-slate-800">Shot 2: Pouring</span>
+<span class="text-[10px] text-slate-500 truncate">Slow motion water...</span>
+<div class="flex gap-2 mt-1">
+<span class="bg-cyan-50 border border-cyan-200 text-cyan-600 text-[9px] px-1.5 rounded font-medium">Ken Burns</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 p-2 rounded-lg hover:bg-white/60 cursor-pointer border border-transparent hover:border-cyan-200 transition-all group">
+<div class="w-16 h-16 bg-slate-100 rounded overflow-hidden shrink-0 relative border border-slate-200 group-hover:border-cyan-300 transition-colors shadow-sm">
+<img class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXNOy_wAxVSugEJUl-em593Kv1olfQh2OiC25unAIwTL5h9dDrPoVPFjphrTQaMu0jtz46eMYAhs2wCUMVnCazj0NZDzz6Ue0bqkKITqVVT88L0xXaznba6vxEgb8J3w7HCAO8iqvV0X9LgrdTM85ppPyXg5yNExCl22NiBpBTC4IvHJtm3q2VU9NmNXoyTJi39uibV4A1Er5jJ8iGRyyN1JxzYvMaSzRg1luAeTiCSyJ8IN2V53xo15R7ZmMSa82050G8VkNLRw"/>
+<div class="absolute bottom-0 right-0 bg-white/90 px-1.5 text-[9px] text-slate-700 backdrop-blur-sm border-tl border-slate-100 font-mono">00:04</div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<span class="text-xs font-semibold text-slate-700 group-hover:text-cyan-700 transition-colors">Shot 3: Waiting</span>
+<span class="text-[10px] text-slate-500 truncate">Time lapse brewing...</span>
+</div>
+</div>
+</div>
+</nav>
+<div class="p-4 border-t border-[var(--border-color)] bg-white/40">
+<button class="w-full flex items-center justify-center gap-2 py-2 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors hover:shadow-sm rounded hover:bg-white/60 border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="hidden lg:inline">Project Settings</span>
+</button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col relative min-w-0 bg-transparent">
+<div class="h-12 border-b border-[var(--border-color)] flex items-center justify-between px-6 shrink-0 glass-panel z-20 bg-white/60">
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors" title="Undo">
+<span class="material-symbols-outlined text-[20px]">undo</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors" title="Redo">
+<span class="material-symbols-outlined text-[20px]">redo</span>
+</button>
+<div class="h-4 w-px bg-slate-300 mx-1"></div>
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span class="material-symbols-outlined text-[16px] text-green-500 drop-shadow-sm">cloud_done</span>
+<span>Saved</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-200 text-xs font-medium text-slate-600 hover:border-cyan-300 hover:text-cyan-700 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]">aspect_ratio</span>
+                    9:16
+                </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white border border-slate-200 text-xs font-medium text-slate-600 hover:border-cyan-300 hover:text-cyan-700 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]">hd</span>
+                    1080p
+                </button>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center relative p-8">
+<div class="absolute inset-0 bg-gradient-to-b from-cyan-50/40 to-orange-50/40 pointer-events-none"></div>
+<div class="relative h-full aspect-[9/16] bg-slate-900 shadow-2xl rounded-lg overflow-hidden border border-[var(--border-color)] group ring-4 ring-white/40">
+<div class="absolute inset-0 bg-gray-900 flex items-center justify-center overflow-hidden">
+<img alt="Preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg4LjRVNm8qmeU1K4GAx-3ORlEW758_JK1k3oEYq2WJBv3rUWrIiM9Mw731Q6Pw4k6VDWJCQueRQnxyHPE8M75pjmV0bj0IOYIOWoedY100EjUPoFHn81nzfPUOemZjAlGS5SYJ41VZ-b_t4p2fFcgVftfAykVxNHZgPU-KSKSeQFXFs3fqWw8ASNGKqAWYGhsnjnwWAKJ8LKqOFJifGY7gqt9dY9VeSM37PLhpZ6qgkWeOAxo4fx0oXC2HKA5BNdJKT3NBUwA-Q"/>
+<div class="absolute top-1/4 left-0 w-full text-center p-4">
+<h2 class="text-4xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] font-serif italic" contenteditable="true">Cold Brew Magic ✨</h2>
+</div>
+<div class="absolute inset-0 pointer-events-none opacity-20 border-[16px] border-transparent">
+<div class="w-full h-full border border-dashed border-white/50 rounded-lg"></div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex items-center justify-between mb-3">
+<span class="text-xs font-mono text-white text-shadow-sm">00:08 / 00:32</span>
+</div>
+<div class="flex items-center justify-center gap-6 text-white">
+<button class="hover:text-cyan-300 hover:drop-shadow-md transition-all"><span class="material-symbols-outlined text-3xl">skip_previous</span></button>
+<button class="h-14 w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:scale-105 hover:bg-cyan-500 hover:border-transparent hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-all">
+<span class="material-symbols-outlined filled text-3xl">play_arrow</span>
+</button>
+<button class="hover:text-cyan-300 hover:drop-shadow-md transition-all"><span class="material-symbols-outlined text-3xl">skip_next</span></button>
+</div>
+</div>
+</div>
+</div>
+<div class="h-48 glass-panel border-t border-[var(--border-color)] flex flex-col shrink-0 z-20 bg-white/60">
+<div class="h-10 border-b border-slate-200 flex items-center justify-between px-4 bg-white/40">
+<div class="flex items-center gap-3">
+<button class="text-slate-500 hover:text-slate-800 transition-colors"><span class="material-symbols-outlined text-[18px]">cut</span></button>
+<button class="text-slate-500 hover:text-slate-800 transition-colors"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<div class="h-4 w-px bg-slate-300"></div>
+<button class="text-slate-500 hover:text-slate-800 transition-colors"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button>
+<input class="w-20 accent-[var(--accent-primary)] h-1" max="100" min="1" type="range" value="50"/>
+</div>
+<div class="text-xs text-cyan-600 font-mono tracking-widest font-semibold">FRAME: 240</div>
+</div>
+<div class="flex-1 overflow-x-auto overflow-y-hidden p-4 relative bg-white/30">
+<div class="flex h-6 mb-2 text-[10px] text-slate-500 font-mono border-b border-slate-200 items-end pb-1 sticky left-0 w-full">
+<span class="w-24 border-l border-slate-300 pl-1">00:00</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:05</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:10</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:15</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:20</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:25</span>
+<span class="w-24 border-l border-slate-300 pl-1">00:30</span>
+</div>
+<div class="absolute top-0 bottom-0 left-[240px] w-px bg-[var(--accent-secondary)] z-30 pointer-events-none shadow-[0_0_10px_rgba(249,115,22,0.4)]">
+<div class="w-3 h-3 bg-[var(--accent-secondary)] transform -translate-x-1.5 rotate-45 -mt-1.5 shadow-sm border border-white"></div>
+</div>
+<div class="relative h-16 bg-[var(--timeline-track)] rounded-lg mb-2 flex items-center px-1 border border-slate-200 shadow-inner">
+<div class="absolute left-0 top-1 bottom-1 w-[120px] bg-cyan-50 border border-cyan-200 rounded flex items-center justify-center overflow-hidden cursor-pointer group hover:border-cyan-300 hover:shadow-sm transition-all">
+<div class="text-[10px] text-cyan-800 font-medium z-10 truncate px-2 bg-white/60 rounded px-1 backdrop-blur-sm">Shot 1</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity grayscale hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuJBdaAJBG_aIxevDu4QrlbJhf3Zli98C9LPiVbhgvo8TcNryqwESyOi70ce5FPKHTGLzYIXV_Yom6hmX6AWQRotUllKVb5dm8eqN4j-vb_ktCvRJHPBPK0F7sRgzpy673-MQHq15aYIp_kJYmo1ZKuUNSIixcvgEwy-mpnrDiuyGLub5lq8qlzw1gf5YHha9K8kE2AT4NROt5nYprDf4PkfTl5vTXergMZuZE6-rrcepVlVCR8l9JNADHan4a-2uK1K0MrXRraQ"/>
+</div>
+<div class="absolute left-[110px] top-1 bottom-1 w-[20px] bg-white/80 z-20 backdrop-blur-sm flex items-center justify-center border-x border-slate-200">
+<span class="material-symbols-outlined text-[10px] text-slate-400">hourglass_empty</span>
+</div>
+<div class="absolute left-[120px] top-1 bottom-1 w-[180px] bg-cyan-100 border-2 border-[var(--accent-primary)] rounded flex items-center justify-center overflow-hidden cursor-pointer shadow-md">
+<div class="text-[10px] text-cyan-900 font-bold z-10 truncate px-2 bg-white/70 rounded px-1 backdrop-blur-sm">Shot 2</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkt-ZcgtcJILLq0UIyFAinl-pWGukfLXmJ1r1JkiASm76w_twKf_SDXOV1xWs1ORH0XTFzWX_scMrkrsbvEOklDsWKqyqrXQa7MscJ_Z3LqnafDSP4ZvreeMbKua7YyzP4qgynYTSRTZyaN57Mndtc-VQtItAN5Duh4hpTJdCNB_okz4TUxwhg8fmPhSBYZT1dZ5728LF-kXw9uxycuJbTG_bx_zUGiaSi2rE9JmlIUeI0_KXp1Hnlz3NQfxV3MVvshwOQOJhA1Q"/>
+</div>
+<div class="absolute left-[300px] top-1 bottom-1 w-[140px] bg-cyan-50 border border-cyan-200 rounded flex items-center justify-center overflow-hidden cursor-pointer group hover:border-cyan-300 hover:shadow-sm transition-all">
+<div class="text-[10px] text-cyan-800 font-medium z-10 truncate px-2 bg-white/60 rounded px-1 backdrop-blur-sm">Shot 3</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity grayscale hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDSaj47iarPiq27PliwPQrOUXDfS7yG3ru9Ncfe5FC3T4n6OkPVfL-hPoj2JNSDjte7aetQVN9F1O7JpJTdWvV2sBp3tm4mpioYfVLZ4fsOCuuBZU35TSjuib9_1pIA2loxRs5_vfyuNCIOKvwigmU_qw_jd4_Db9KlakbfUTn7SJOqZoE8QcGaqHjOCIWhx6YGidBQm0xTi8le6y9kNOlJx22jT76eTjxNdyKRE-j4QEXZGLtMkQ5Y7UHRIR_A-oFmoit1A63xQ"/>
+</div>
+</div>
+<div class="relative h-8 bg-[var(--timeline-track)] rounded-lg flex items-center px-1 border border-slate-200 shadow-inner">
+<div class="absolute left-0 w-[440px] top-1 bottom-1 bg-teal-50 border border-teal-200 rounded flex items-center px-2 hover:bg-teal-100 transition-colors">
+<span class="material-symbols-outlined text-[12px] text-teal-600 mr-1">music_note</span>
+<span class="text-[10px] text-teal-800 truncate font-medium">Chill Lo-Fi Beats.mp3</span>
+<div class="flex items-center gap-0.5 ml-auto h-full opacity-30">
+<div class="w-px h-3 bg-teal-600"></div>
+<div class="w-px h-5 bg-teal-600"></div>
+<div class="w-px h-2 bg-teal-600"></div>
+<div class="w-px h-4 bg-teal-600"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 glass-panel border-l border-[var(--border-color)] flex flex-col shrink-0 z-30 bg-white/60">
+<div class="flex border-b border-[var(--border-color)] bg-white/50">
+<button class="flex-1 py-3 text-xs font-medium text-cyan-700 border-b-2 border-[var(--accent-primary)] bg-cyan-50/50">Edit</button>
+<button class="flex-1 py-3 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors hover:bg-white/60">Media</button>
+<button class="flex-1 py-3 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors hover:bg-white/60">Style</button>
+<button class="flex-1 py-3 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors hover:bg-white/60">Export</button>
+</div>
+<div class="flex-1 overflow-y-auto p-5 space-y-8 custom-scrollbar">
+<div class="flex items-center gap-3 pb-4 border-b border-slate-200">
+<div class="w-12 h-12 rounded bg-slate-100 overflow-hidden shrink-0 border border-slate-200 ring-2 ring-cyan-100 shadow-sm">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMikOX8VJQnB2qSNkHqxJjRJKZ77grA_ptewZ55NpsLL4AU6mdChknJdOlB7YbzuJ4vNIcz5fGkqs6BHF8N1NELOjFehBWDBQuh-N4p3V1WrATyrRu0z4knQygI6PpQpDQSkI9NGPdaXGV1E3Vz3AGm5IrMPDmjM_Cm-Fzv62pyPHS4Om83uHZYXMfBiGgge6H6HaJONRafMN5dfKKPKgefaZqWSgTHFKY347gnRpA7rl6ztT3T7PiaWejj-wfJLLdRLSDxAAJtg"/>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">Shot 2: Pouring</h3>
+<p class="text-xs text-slate-500">5.0s • Generated by Cinematographer</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-xs font-bold text-cyan-600 uppercase tracking-widest">Motion &amp; Pacing</label>
+</div>
+<div class="bg-white/60 p-3 rounded-lg border border-slate-200 hover:border-cyan-200 transition-colors shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<span class="text-sm text-slate-700 font-medium">Ken Burns Effect</span>
+<button class="w-10 h-5 bg-[var(--accent-primary)] rounded-full relative transition-colors shadow-sm">
+<span class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full shadow-sm transition-transform"></span>
+</button>
+</div>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs mb-1 text-slate-500">
+<span>Zoom Level</span>
+<span class="text-cyan-600 font-semibold">1.2x</span>
+</div>
+<input class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer" max="200" min="100" type="range" value="120"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-500">Direction:</span>
+<div class="flex gap-1">
+<button class="p-1 rounded bg-white text-slate-400 hover:text-slate-600 border border-slate-200 hover:border-slate-300 transition-all shadow-sm"><span class="material-symbols-outlined text-[16px]">arrow_outward</span></button>
+<button class="p-1 rounded bg-cyan-50 text-[var(--accent-primary)] border border-cyan-200 shadow-inner"><span class="material-symbols-outlined text-[16px]">call_received</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-xs font-bold text-cyan-600 uppercase tracking-widest">Text Overlay</label>
+<button class="text-[var(--accent-primary)] text-xs hover:text-cyan-700 transition-colors font-semibold">+ Add</button>
+</div>
+<div class="bg-white/60 p-3 rounded-lg border border-slate-200 space-y-3 hover:border-cyan-200 transition-colors shadow-sm">
+<div>
+<label class="text-xs text-slate-500 mb-1 block">Content</label>
+<input class="w-full bg-white border border-slate-200 rounded px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-[var(--accent-primary)] focus:ring-1 focus:ring-cyan-100 transition-all placeholder-slate-300" type="text" value="Cold Brew Magic ✨"/>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div>
+<label class="text-xs text-slate-500 mb-1 block">Font</label>
+<select class="w-full bg-white border border-slate-200 rounded px-2 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-cyan-300">
+<option>Playfair Display</option>
+<option>Inter</option>
+<option>Montserrat</option>
+</select>
+</div>
+<div>
+<label class="text-xs text-slate-500 mb-1 block">Animation</label>
+<select class="w-full bg-white border border-slate-200 rounded px-2 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-cyan-300">
+<option>Fade In</option>
+<option>Slide Up</option>
+<option>Typewriter</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<label class="text-xs font-bold text-cyan-600 uppercase tracking-widest">Color &amp; Effects</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="p-2 rounded bg-white border border-slate-200 hover:border-[var(--accent-secondary)] hover:bg-orange-50 hover:shadow-sm group transition-all text-left relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-orange-100/30 to-yellow-100/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="block text-xs font-medium text-slate-700 relative z-10 group-hover:text-orange-700">Warm</span>
+<div class="h-1 w-full bg-gradient-to-r from-orange-300 to-yellow-300 mt-2 rounded-full opacity-60"></div>
+</button>
+<button class="p-2 rounded bg-cyan-50 border border-[var(--accent-primary)] shadow-sm text-left relative overflow-hidden ring-1 ring-cyan-100">
+<span class="absolute top-1 right-1 text-[var(--accent-primary)]"><span class="material-symbols-outlined text-[14px] filled">check_circle</span></span>
+<span class="block text-xs font-medium text-slate-800">Cinematic</span>
+<div class="h-1 w-full bg-gradient-to-r from-cyan-400 to-blue-400 mt-2 rounded-full"></div>
+</button>
+<button class="p-2 rounded bg-white border border-slate-200 hover:border-pink-400 hover:bg-pink-50 hover:shadow-sm group transition-all text-left">
+<span class="block text-xs font-medium text-slate-700 group-hover:text-pink-700">Vibrant</span>
+<div class="h-1 w-full bg-gradient-to-r from-pink-400 to-purple-400 mt-2 rounded-full opacity-60"></div>
+</button>
+<button class="p-2 rounded bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-50 hover:shadow-sm group transition-all text-left">
+<span class="block text-xs font-medium text-slate-700">B&amp;W</span>
+<div class="h-1 w-full bg-gradient-to-r from-slate-400 to-slate-200 mt-2 rounded-full opacity-60"></div>
+</button>
+</div>
+<div class="pt-2">
+<div class="flex justify-between text-xs mb-1 text-slate-500">
+<span>Intensity</span>
+<span class="text-cyan-600 font-semibold">80%</span>
+</div>
+<input class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[var(--accent-primary)]" max="100" min="0" type="range" value="80"/>
+</div>
+</div>
+</div>
+<div class="p-5 border-t border-[var(--border-color)] bg-white/70 backdrop-blur-md">
+<div class="flex items-center justify-between text-xs text-slate-500 mb-3">
+<span>Total Cost</span>
+<span class="font-bold text-slate-800">5 Credits</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2.5 rounded border border-slate-300 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-50 hover:border-slate-400 transition-all shadow-sm bg-white">
+                    Save Draft
+                </button>
+<button class="flex-1 py-2.5 rounded bg-gradient-to-r from-[var(--accent-secondary)] to-[var(--accent-primary)] hover:brightness-110 text-sm font-bold text-white shadow-lg hover:shadow-cyan-200 transition-all flex items-center justify-center gap-2 border border-white/20">
+<span>Approve &amp; Export</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

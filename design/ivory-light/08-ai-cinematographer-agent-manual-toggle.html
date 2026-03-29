@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Light Ivory Shot Intervention Interface</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "ivory-bg": "#FFFFF0",
+                        "ivory-panel": "#F5F5E6","ivory-border": "#E6E6D8",
+                        "neon-cyan": "#00FFFF",
+                        "neon-cyan-dark": "#00CCCC",
+                        "electric-orange": "#FF5F1F",
+                        "electric-orange-hover": "#E04E15",
+                        "charcoal": "#333333",
+                        "slate-text": "#4A4A4A",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #00FFFF;cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 0 2px #fff, 0 0 4px rgba(0,0,0,0.1);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #E6E6D8;
+            border-radius: 2px;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFFF0; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E6E6D8; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FFFF; 
+        }.glass-panel {
+            background: rgba(245, 245, 230, 0.85);backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-ivory-bg text-charcoal font-display min-h-screen flex flex-col overflow-hidden">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-ivory-border bg-ivory-bg px-6 py-3 shrink-0 z-20 shadow-sm">
+<div class="flex items-center gap-4 text-charcoal">
+<div class="size-8 flex items-center justify-center text-neon-cyan-dark">
+<span class="material-symbols-outlined text-3xl drop-shadow-sm">movie_filter</span>
+</div>
+<h2 class="text-charcoal text-lg font-bold leading-tight tracking-[-0.015em]">AI Cinematographer</h2>
+<div class="h-4 w-px bg-ivory-border mx-2"></div>
+<span class="text-slate-500 text-sm font-medium">Scene 04 - Shot 12</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-neon-cyan/10 text-neon-cyan-dark border border-neon-cyan/20 uppercase tracking-wider">Manual Mode</span>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-charcoal hover:text-neon-cyan-dark transition-colors text-sm font-medium leading-normal" href="#">Projects</a>
+<a class="text-charcoal hover:text-neon-cyan-dark transition-colors text-sm font-medium leading-normal" href="#">Library</a>
+<a class="text-charcoal hover:text-neon-cyan-dark transition-colors text-sm font-medium leading-normal" href="#">Settings</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex size-9 cursor-pointer items-center justify-center rounded-lg hover:bg-ivory-border text-charcoal transition-colors">
+<span class="material-symbols-outlined fill-current text-orange-400">wb_sunny</span>
+</button>
+<button class="flex size-9 cursor-pointer items-center justify-center rounded-lg hover:bg-ivory-border text-charcoal transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-9 cursor-pointer items-center justify-center rounded-lg hover:bg-ivory-border text-charcoal transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<section class="flex-1 flex flex-col bg-[#F8F8F4] relative overflow-hidden">
+<div class="absolute top-4 left-4 right-4 flex justify-between items-start z-10 pointer-events-none">
+<div class="flex gap-2 pointer-events-auto">
+<button class="bg-white/70 backdrop-blur-md text-charcoal hover:text-black hover:bg-white shadow-sm p-2 rounded-lg transition-all border border-white/50" title="Toggle Grid">
+<span class="material-symbols-outlined text-xl">grid_4x4</span>
+</button>
+<button class="bg-white/70 backdrop-blur-md text-charcoal hover:text-black hover:bg-white shadow-sm p-2 rounded-lg transition-all border border-white/50" title="Safe Zones">
+<span class="material-symbols-outlined text-xl">crop_free</span>
+</button>
+</div>
+<div class="bg-white/70 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-mono text-charcoal border border-white/50 shadow-sm">
+                    00:04:12:08
+                </div>
+</div>
+<div class="flex-1 flex items-center justify-center p-6 bg-ivory-bg/50">
+<div class="relative w-full max-w-5xl aspect-video bg-white rounded-xl overflow-hidden shadow-xl border border-ivory-border group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Cinematic shot of a futuristic cyberpunk city street with neon lights and rain" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCi2q9KGmcVFIk1ZlJ_QiB2UhQQlPlp32S95nfyDvBsq6TsdtAgt_gS9BBg4tAong-5swDHkpv1VuW4wIU57Kzo_s9s0Pc7_oy8mGsiGbpiSpZ1EJrmS7URW6smyCgCHdJT03oO3c_I1E3Apn9wMyd-CBBc8mSrQ_8qnmx5o_yqLQp-7bncq301yNNg1EvNqEMNN_FTHacKfJu_ZFzKBLucXR5pJampFJpAAQsad9JUvsB9efteF9JAUo7nfVp-j4PBRuMLVOohxA');"></div>
+<div class="absolute inset-0 flex items-center justify-center bg-white/10 group-hover:bg-white/5 transition-colors">
+<button class="size-16 flex items-center justify-center rounded-full bg-neon-cyan/90 text-charcoal hover:bg-neon-cyan hover:scale-105 transition-all shadow-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-4xl ml-1">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md text-charcoal px-3 py-1.5 rounded text-xs pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity border border-white/60 shadow-sm">
+                        Hold Space to Compare Original
+                    </div>
+</div>
+</div>
+<div class="h-48 border-t border-ivory-border glass-panel p-4 flex flex-col gap-3 shrink-0">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold text-charcoal uppercase tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-neon-cyan-dark text-base">auto_awesome_motion</span>
+                        Alternative Generations
+                    </h3>
+<button class="text-xs text-neon-cyan-dark hover:text-neon-cyan font-medium">View All History</button>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-2 h-full items-center">
+<div class="relative shrink-0 w-48 aspect-video rounded-lg overflow-hidden border-2 border-neon-cyan ring-2 ring-neon-cyan/20 cursor-pointer group shadow-md">
+<div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-105 duration-500" data-alt="Neon cyberpunk street scene variant 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJUgOFFZ9kdWp1CuAcp3jFICWmPhxPzya3SN8VtZRzaBKxRYGzXz1GwKmGpeGVbEFnhirxw2tZGt1TfO_yF_WOqDq8gbEjvESzQRd-uNkoFtySK_pXUHpBcWiJsB2zNqll6GR1EsoODI6qQCibvv3-jUEkcIW0WhOefDHvgoa51zfo-q44VBBEVi2Bhd1wCZhGPWvqsV0lF6A7OtRm3TucU1znQJbyM3PdaixIVrYO4dth9ejjvzZqZMdyiOafX8awOpzL3G7AZA');"></div>
+<div class="absolute top-2 right-2 bg-neon-cyan text-charcoal text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">ACTIVE</div>
+</div>
+<div class="relative shrink-0 w-48 aspect-video rounded-lg overflow-hidden border border-ivory-border hover:border-neon-cyan/50 cursor-pointer group opacity-90 hover:opacity-100 transition-all hover:shadow-lg">
+<div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-105 duration-500" data-alt="Neon cyberpunk street scene with bluer tones variant 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDr99dpNuoImB8Z3BBYlULJ92DO7u0xTOYUWrM9A61x9mf8TU5SiHueLapPow-LUUdlvDA936GAXicTp4Y0vvynTOoXivoPgTbwR7q0OcBjV-KwyOKMNU4wNwjukU672YDxVd390_5N2irFVN3qvvfGlTszv7yxuuD0xAbzxXuriNlImiT6lH0eDD2yfQXFi0PA4Tcc1k1lGwQ58xRs4dOKZ5jcHNR87W_LgEqEm6YyqCAf3qsoaREZfoV6NLrUakhsLviSjUvgWw');"></div>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-white/90 to-transparent p-2">
+<span class="text-[10px] text-charcoal font-medium">Var B • High Contrast</span>
+</div>
+</div>
+<div class="relative shrink-0 w-48 aspect-video rounded-lg overflow-hidden border border-ivory-border hover:border-neon-cyan/50 cursor-pointer group opacity-90 hover:opacity-100 transition-all hover:shadow-lg">
+<div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-105 duration-500" data-alt="Neon cyberpunk street scene closer angle variant 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeDGiiTcXYuADJeiZQkEE5j_eUmC3mTrEjutNyJdWte8G7MilYbsybVHvvYbK1R8W22Ngz4YYuT4bRKQQEVT5w3yHZS2C7-CKfEPBbKwHkdmmyopSwVVLjVShV4lLYLqpRc3vck3brJBY1CEjg4jO0hc-C_J2Rgzvm8WLTSxKe9U65h19K5RCKnnQVyxaa3V1Vl6_zGXTELz7jSUvCjxgASyfbrrFfx68JJaaae9j1O737Na4trQ65JtClD74i9ItdcgrfveIIhQ');"></div>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-white/90 to-transparent p-2">
+<span class="text-[10px] text-charcoal font-medium">Var C • Wider Angle</span>
+</div>
+</div>
+<div class="relative shrink-0 w-48 aspect-video rounded-lg overflow-hidden border border-ivory-border hover:border-neon-cyan/50 cursor-pointer group opacity-90 hover:opacity-100 transition-all hover:shadow-lg">
+<div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-105 duration-500" data-alt="Neon cyberpunk street scene with more fog variant 4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVniQKtNphfHJZv8wuK60IKqjW8tRWAfbibgeafkZlp7ahDMCM_mlVLnOwayUFh8U54XnWkaL1kskBGXePwQ4UVX-4Nsxxm4YhBGlf5QrUJQzH9bCVAFhM9Qyi4y0cgrs_dl5rx29nZM-euTwyPJSn6jcBIr5qmkBTJLh1Q-HEqGTJQstD7b9gClczjVULnkknnM-yUoS4Ps3GeAcbAwFXrYwMjIVKq-Ie4n6M-1BO2pl7qGp8bT6Gsx4TzjttHPchSrH-T9MB6w');"></div>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-white/90 to-transparent p-2">
+<span class="text-[10px] text-charcoal font-medium">Var D • Foggy</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<aside class="w-96 glass-panel border-l border-ivory-border flex flex-col overflow-y-auto shrink-0 z-10 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.05)]">
+<div class="p-6 border-b border-ivory-border">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-charcoal text-lg font-bold">Manual Intervention</h3>
+<span class="material-symbols-outlined text-slate-400 hover:text-neon-cyan-dark cursor-pointer transition-colors" title="Reset to Defaults">restart_alt</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<label class="text-slate-500 text-xs font-medium uppercase tracking-wider">Lighting Intensity</label>
+<span class="text-charcoal text-sm font-mono bg-white border border-ivory-border px-2 py-0.5 rounded shadow-sm">75%</span>
+</div>
+<div class="relative h-6 flex items-center">
+<input class="z-10 relative" max="100" min="0" type="range" value="75"/>
+<div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-ivory-border rounded-full overflow-hidden">
+<div class="h-full bg-neon-cyan w-[75%] shadow-[0_0_10px_rgba(0,255,255,0.4)]"></div>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<label class="text-slate-500 text-xs font-medium uppercase tracking-wider">Camera Speed</label>
+<span class="text-charcoal text-sm font-mono bg-white border border-ivory-border px-2 py-0.5 rounded shadow-sm">1.2x</span>
+</div>
+<div class="relative h-6 flex items-center">
+<input class="z-10 relative" max="3.0" min="0.5" step="0.1" type="range" value="1.2"/>
+<div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-ivory-border rounded-full overflow-hidden">
+<div class="h-full bg-neon-cyan w-[40%] shadow-[0_0_10px_rgba(0,255,255,0.4)]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-400 font-mono">
+<span>Slow</span>
+<span>Fast</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<label class="text-slate-500 text-xs font-medium uppercase tracking-wider">Focus Depth</label>
+<span class="text-charcoal text-sm font-mono bg-white border border-ivory-border px-2 py-0.5 rounded shadow-sm">f/2.8</span>
+</div>
+<div class="relative h-6 flex items-center">
+<input class="z-10 relative" max="22" min="1.4" step="0.1" type="range" value="2.8"/>
+<div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-ivory-border rounded-full overflow-hidden">
+<div class="h-full bg-neon-cyan w-[20%] shadow-[0_0_10px_rgba(0,255,255,0.4)]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-400 font-mono">
+<span>Shallow</span>
+<span>Deep</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<div class="mb-4">
+<label class="text-charcoal text-sm font-bold block mb-2">Regenerate with Prompt</label>
+<p class="text-xs text-slate-500 mb-3">Describe specific changes in natural language to guide the AI regeneration.</p>
+</div>
+<div class="relative mb-4">
+<textarea class="w-full h-32 bg-white border border-ivory-border rounded-lg p-3 text-sm text-charcoal placeholder-slate-400 resize-none focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all shadow-sm" placeholder="e.g. Make the lighting warmer and add a subtle lens flare from the top left..."></textarea>
+<button class="absolute bottom-3 right-3 p-1.5 bg-neon-cyan/10 hover:bg-neon-cyan text-neon-cyan-dark hover:text-charcoal rounded-md transition-colors" title="Generate">
+<span class="material-symbols-outlined text-lg">send</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-6">
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded bg-white hover:bg-ivory-bg border border-ivory-border hover:border-neon-cyan transition-all text-xs text-charcoal shadow-sm">
+<span class="material-symbols-outlined text-sm text-orange-400">wb_sunny</span>
+                        Golden Hour
+                    </button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded bg-white hover:bg-ivory-bg border border-ivory-border hover:border-neon-cyan transition-all text-xs text-charcoal shadow-sm">
+<span class="material-symbols-outlined text-sm text-blue-400">blur_on</span>
+                        Cinematic Blur
+                    </button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded bg-white hover:bg-ivory-bg border border-ivory-border hover:border-neon-cyan transition-all text-xs text-charcoal shadow-sm">
+<span class="material-symbols-outlined text-sm text-red-400">movie</span>
+                        Film Grain
+                    </button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 rounded bg-white hover:bg-ivory-bg border border-ivory-border hover:border-neon-cyan transition-all text-xs text-charcoal shadow-sm">
+<span class="material-symbols-outlined text-sm text-green-400">videocam</span>
+                        Handheld
+                    </button>
+</div>
+<div class="mt-auto space-y-3 pt-6 border-t border-ivory-border">
+<div class="flex gap-3">
+<button class="flex-1 py-3 px-4 rounded-lg bg-white border border-neon-cyan text-charcoal hover:bg-neon-cyan/5 text-sm font-bold transition-colors shadow-sm">
+                            Apply Changes
+                        </button>
+<button class="py-3 px-4 rounded-lg bg-white border border-ivory-border hover:bg-ivory-bg text-charcoal text-sm font-bold transition-colors shadow-sm" title="Keep Original">
+<span class="material-symbols-outlined">undo</span>
+</button>
+</div>
+<button class="w-full py-3 px-4 rounded-lg bg-electric-orange hover:bg-electric-orange-hover text-white text-sm font-bold shadow-lg shadow-electric-orange/20 transition-all flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:animate-pulse">check_circle</span>
+                        Commit &amp; Continue
+                    </button>
+</div>
+</div>
+</aside>
+</main>
+
+</body></html>

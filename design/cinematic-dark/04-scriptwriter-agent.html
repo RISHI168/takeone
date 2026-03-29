@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Scriptwriter Editor - TakeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bg-dark: #050508;
+            --bg-card: #0a0b12;
+            --bg-card-hover: #12141f;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #ec4899;
+            --accent-tertiary: #f97316;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-color: #1e293b;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+        }.bg-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }.ambient-glow-1 {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(10, 11, 18, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+        }
+        .neon-border {
+             box-shadow: 0 0 10px rgba(59, 130, 246, 0.1), inset 0 0 20px rgba(59, 130, 246, 0.05);
+        }
+        .neon-orange-text {
+            color: #fb923c;
+            text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
+        }
+        .neon-blue-text {
+            color: #60a5fa;
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: #334155;
+            border-radius: 20px;
+        }
+        .script-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.3) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .script-card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .script-card-active {
+            border-color: rgba(96, 165, 250, 0.5);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden selection:bg-cyan-500 selection:text-white">
+<div class="bg-grain"></div>
+<div class="ambient-glow-1"></div>
+<div class="ambient-glow-2"></div>
+<header class="h-16 border-b border-white/5 bg-black/40 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-20 relative">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 group cursor-pointer">
+<div class="p-1.5 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.7)] transition-all">
+<span class="material-symbols-outlined text-white text-[20px]">movie_edit</span>
+</div>
+<h1 class="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">TAKEONE</h1>
+</div>
+<div class="h-6 w-px bg-white/10 mx-2"></div>
+<div class="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-white transition-colors cursor-pointer group">
+<span>My Projects</span>
+<span class="material-symbols-outlined text-[16px] group-hover:text-cyan-400 transition-colors">chevron_right</span>
+<span class="text-white font-medium">Cold Brew Coffee Tutorial</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-black/60 px-3 py-1.5 rounded-full border border-white/10 shadow-inner shadow-white/5">
+<div class="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4] animate-pulse"></div>
+<span class="text-xs font-medium text-gray-300">Co-Pilot Mode Active</span>
+</div>
+<button class="p-2 hover:bg-white/5 rounded-lg transition-colors text-gray-400 hover:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-9 h-9 rounded-full p-[2px] bg-gradient-to-br from-cyan-400 to-purple-600">
+<div class="w-full h-full rounded-full bg-black flex items-center justify-center">
+<span class="text-xs font-bold text-white">JS</span>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden z-10 relative">
+<div class="flex-1 flex flex-col border-r border-white/5 min-w-[600px] relative bg-black/20">
+<div class="h-14 flex items-center justify-between px-8 border-b border-white/5 bg-black/20 backdrop-blur shrink-0">
+<div class="flex items-center gap-3">
+<span class="text-sm font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_#06b6d4]"></span> Generated Script
+</span>
+<span class="px-2 py-0.5 rounded text-[10px] bg-cyan-500/10 text-cyan-400 font-medium border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">v1.2</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-400">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-cyan-400">timer</span>
+<span>32s</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-purple-400">videocam</span>
+<span>6 Shots</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scroll p-8 pb-32">
+<div class="max-w-3xl mx-auto space-y-6">
+<div class="group relative rounded-xl script-card-active p-6 transition-all">
+<div class="absolute -left-3 top-6 w-1 h-16 bg-gradient-to-b from-blue-500 via-cyan-400 to-purple-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2 drop-shadow-[0_0_5px_rgba(6,182,212,0.8)]">
+<span class="material-symbols-outlined text-[18px]">bolt</span> Hook (0:00 - 0:03)
+                            </h3>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="text-xs flex items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors bg-black/40 px-3 py-1.5 rounded-full border border-white/10 hover:border-cyan-500/50">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Regen
+                                </button>
+<button class="text-xs flex items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors bg-black/40 px-3 py-1.5 rounded-full border border-white/10 hover:border-cyan-500/50">
+<span class="material-symbols-outlined text-[14px]">lock</span> Lock
+                                </button>
+</div>
+</div>
+<div class="mb-5 relative group/textarea">
+<div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover/textarea:opacity-100 transition-opacity pointer-events-none"></div>
+<label class="block text-[10px] text-cyan-200/50 uppercase font-semibold mb-2 tracking-wider">Voiceover</label>
+<textarea class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-xl font-medium text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 outline-none resize-none transition-all shadow-inner shadow-black/50" rows="2">Ever wonder why your coffee tastes bitter? It's all about the brew time.</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] text-cyan-200/50 uppercase font-semibold mb-2 tracking-wider">Visual Direction</label>
+<div class="bg-black/30 border border-white/5 rounded-lg p-3 text-sm text-gray-300 italic flex items-start gap-2 min-h-[60px] hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-cyan-500/70 mt-0.5">visibility</span>
+<span class="outline-none focus:text-white" contenteditable="true">Extreme close-up of coffee grounds pouring into glass jar. Slow motion.</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] text-cyan-200/50 uppercase font-semibold mb-2 tracking-wider">On-Screen Text</label>
+<div class="bg-black/30 border border-white/5 rounded-lg p-3 text-sm text-cyan-100 font-medium flex items-center gap-2 min-h-[60px] hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-purple-400">title</span>
+<input class="bg-transparent w-full outline-none border-none p-0 focus:ring-0 text-sm placeholder-gray-600" type="text" value="The Bitter Truth ☕"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative rounded-xl script-card p-6">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xs font-bold text-gray-500 group-hover:text-gray-300 transition-colors uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">article</span> Body Beat 1 (0:03 - 0:11)
+                            </h3>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-xs flex items-center gap-1 text-gray-400 hover:text-white transition-colors bg-black/40 px-3 py-1.5 rounded-full border border-white/10">
+<span class="material-symbols-outlined text-[14px]">edit</span> Edit
+                                </button>
+</div>
+</div>
+<div class="mb-5">
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">Voiceover</label>
+<textarea class="w-full bg-black/20 border border-white/5 rounded-lg p-4 text-base text-gray-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 outline-none resize-none transition-all" rows="3">Traditional hot brewing extracts acidic compounds instantly. But cold brew? It's a game changer. It steeps slowly for a smoother, naturally sweet flavor profile.</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">Visual Direction</label>
+<div class="bg-black/20 border border-white/5 rounded-lg p-3 text-sm text-gray-500 italic flex items-start gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-gray-600 mt-0.5">visibility</span>
+<span class="outline-none focus:text-white" contenteditable="true">Split screen comparison: Steaming hot acidic coffee vs. smooth pouring cold brew over ice.</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">On-Screen Text</label>
+<div class="bg-black/20 border border-white/5 rounded-lg p-3 text-sm text-gray-400 font-medium flex items-center gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-gray-600">title</span>
+<input class="bg-transparent w-full outline-none border-none p-0 focus:ring-0 text-sm" type="text" value="Hot vs Cold 🔥❄️"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative rounded-xl script-card p-6">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xs font-bold text-gray-500 group-hover:text-gray-300 transition-colors uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">article</span> Body Beat 2 (0:11 - 0:20)
+                            </h3>
+</div>
+<div class="mb-5">
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">Voiceover</label>
+<textarea class="w-full bg-black/20 border border-white/5 rounded-lg p-4 text-base text-gray-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 outline-none resize-none transition-all" rows="3">Just add coarse grounds, pour in cold water, and let it sit in your fridge for 12 hours. That's literally it. No machines, no bitterness.</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">Visual Direction</label>
+<div class="bg-black/20 border border-white/5 rounded-lg p-3 text-sm text-gray-500 italic flex items-start gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-gray-600 mt-0.5">visibility</span>
+<span class="outline-none focus:text-white" contenteditable="true">Time-lapse montage: Adding water, placing in fridge, clock spinning fast.</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] text-gray-600 uppercase font-semibold mb-2 tracking-wider">On-Screen Text</label>
+<div class="bg-black/20 border border-white/5 rounded-lg p-3 text-sm text-gray-400 font-medium flex items-center gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-gray-600">title</span>
+<input class="bg-transparent w-full outline-none border-none p-0 focus:ring-0 text-sm" type="text" value="12 Hours Later... ⏰"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative rounded-xl border border-pink-500/20 bg-gradient-to-b from-pink-900/10 to-black/30 p-6 transition-all hover:border-pink-500/40 hover:bg-pink-900/20 backdrop-blur-sm">
+<div class="absolute -left-3 top-6 w-1 h-16 bg-gradient-to-b from-pink-500 to-purple-600 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.5)]"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xs font-bold text-pink-400 uppercase tracking-widest flex items-center gap-2 drop-shadow-[0_0_5px_rgba(236,72,153,0.8)]">
+<span class="material-symbols-outlined text-[18px]">campaign</span> CTA (0:28 - 0:32)
+                            </h3>
+</div>
+<div class="mb-5">
+<label class="block text-[10px] text-pink-200/50 uppercase font-semibold mb-2 tracking-wider">Voiceover</label>
+<textarea class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-xl font-medium text-white focus:border-pink-500 focus:ring-1 focus:ring-pink-500/50 outline-none resize-none transition-all shadow-inner shadow-black/50" rows="2">Try this method and let me know your favorite bean roast in the comments below! 👇</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] text-pink-200/50 uppercase font-semibold mb-2 tracking-wider">Visual Direction</label>
+<div class="bg-black/30 border border-white/5 rounded-lg p-3 text-sm text-gray-300 italic flex items-start gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-pink-500/50 mt-0.5">visibility</span>
+<span class="outline-none focus:text-white" contenteditable="true">Influencer holding glass, smiling, pointing down. Animated arrow overlay.</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] text-pink-200/50 uppercase font-semibold mb-2 tracking-wider">On-Screen Text</label>
+<div class="bg-black/30 border border-white/5 rounded-lg p-3 text-sm text-pink-200 font-medium flex items-center gap-2 hover:border-white/10 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-pink-400">title</span>
+<input class="bg-transparent w-full outline-none border-none p-0 focus:ring-0 text-sm" type="text" value="Comment Your Roast! 👇"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 glass-panel rounded-full p-2 flex items-center gap-2 z-20 shadow-[0_10px_40px_rgba(0,0,0,0.6)] border-t border-white/20">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium text-gray-300 group">
+<span class="material-symbols-outlined text-[18px] group-hover:text-cyan-400 transition-colors">refresh</span>
+                    Regenerate Hook
+                </button>
+<div class="w-px h-6 bg-white/10"></div>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium text-gray-300 group">
+<span class="material-symbols-outlined text-[18px] group-hover:text-purple-400 transition-colors">tune</span>
+                    Adjust Tone
+                </button>
+<div class="w-px h-6 bg-white/10"></div>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all text-sm font-bold text-white shadow-[0_0_20px_rgba(147,51,234,0.4)] hover:shadow-[0_0_30px_rgba(147,51,234,0.6)]">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                    Approve &amp; Continue
+                </button>
+</div>
+</div>
+<aside class="w-[380px] bg-black/40 backdrop-blur-xl flex flex-col border-l border-white/5 shrink-0 z-10 relative shadow-[-10px_0_30px_rgba(0,0,0,0.3)]">
+<div class="h-14 flex items-center px-6 border-b border-white/5 bg-black/20">
+<h2 class="font-bold text-sm flex items-center gap-2 tracking-wide text-gray-200">
+<span class="material-symbols-outlined neon-blue-text text-[20px]">analytics</span>
+                    SCRIPT ANALYSIS
+                </h2>
+</div>
+<div class="p-6 flex-1 overflow-y-auto custom-scroll space-y-8">
+<div class="relative p-5 rounded-2xl bg-gradient-to-b from-blue-900/10 to-transparent border border-blue-500/20 shadow-[inset_0_0_20px_rgba(59,130,246,0.05)]">
+<div class="flex items-end justify-between mb-3">
+<span class="text-sm font-medium text-blue-200/70 uppercase tracking-wider">Engagement Score</span>
+<span class="text-3xl font-bold gradient-text drop-shadow-md">92<span class="text-lg text-white/30 ml-1">/100</span></span>
+</div>
+<div class="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 w-[92%] rounded-full shadow-[0_0_10px_rgba(236,72,153,0.5)]"></div>
+</div>
+<p class="text-xs text-gray-400 mt-4 leading-relaxed">
+                        Excellent script structure. The hook is very strong for TikTok/Reels algorithms, leveraging high-contrast curiosity.
+                    </p>
+</div>
+<div>
+<h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-blue-500"></span> Key Elements
+</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/20 group hover:bg-blue-500/10 transition-colors">
+<div class="bg-blue-500/20 p-1.5 rounded-full shrink-0 mt-0.5 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+<span class="material-symbols-outlined text-blue-400 text-[14px] font-bold">check</span>
+</div>
+<div>
+<p class="text-sm font-bold text-blue-100 neon-blue-text">Strong Hook</p>
+<p class="text-xs text-gray-400 mt-1 leading-relaxed">Uses a "curiosity gap" question immediately.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/20 group hover:bg-blue-500/10 transition-colors">
+<div class="bg-blue-500/20 p-1.5 rounded-full shrink-0 mt-0.5 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+<span class="material-symbols-outlined text-blue-400 text-[14px] font-bold">check</span>
+</div>
+<div>
+<p class="text-sm font-bold text-blue-100 neon-blue-text">Pacing Good</p>
+<p class="text-xs text-gray-400 mt-1 leading-relaxed">Average beat length is 4.2s. Ideal for retention.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/20 group hover:bg-blue-500/10 transition-colors">
+<div class="bg-blue-500/20 p-1.5 rounded-full shrink-0 mt-0.5 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+<span class="material-symbols-outlined text-blue-400 text-[14px] font-bold">check</span>
+</div>
+<div>
+<p class="text-sm font-bold text-blue-100 neon-blue-text">Clear Value Prop</p>
+<p class="text-xs text-gray-400 mt-1 leading-relaxed">Benefits of cold brew explained clearly.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-orange-500/5 border border-orange-500/20 group hover:bg-orange-500/10 transition-colors shadow-[inset_0_0_10px_rgba(249,115,22,0.05)]">
+<div class="bg-orange-500/20 p-1.5 rounded-full shrink-0 mt-0.5 shadow-[0_0_10px_rgba(249,115,22,0.2)]">
+<span class="material-symbols-outlined text-orange-400 text-[14px] font-bold">priority_high</span>
+</div>
+<div>
+<p class="text-sm font-bold text-orange-100 neon-orange-text">CTA Optimization</p>
+<p class="text-xs text-gray-400 mt-1 leading-relaxed">Could be more specific (e.g. "Save this video").</p>
+<button class="mt-2 text-[10px] text-orange-400 hover:text-orange-300 underline font-medium tracking-wide">AUTO-FIX CTA</button>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="w-1 h-1 rounded-full bg-purple-500"></span> Tone &amp; Voice
+</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-medium shadow-[0_0_10px_rgba(168,85,247,0.1)]">Educational</span>
+<span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-medium shadow-[0_0_10px_rgba(6,182,212,0.1)]">Energetic</span>
+<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-medium">Casual</span>
+</div>
+<div class="mt-4 p-4 rounded-xl bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-20 h-20 bg-purple-600/20 blur-2xl rounded-full"></div>
+<div class="flex items-center gap-2 mb-2 relative z-10">
+<span class="material-symbols-outlined text-purple-400 text-[18px]">psychology</span>
+<span class="text-xs font-bold text-purple-200 tracking-wide">AI Insight</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed relative z-10">
+                             The script matches your "Brand Kit: Friendly Expert" voice perfectly. The use of "literally it" adds authenticity for social platforms.
+                         </p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-white/5 bg-black/40 backdrop-blur">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_5px_#22c55e]"></div>
+<span class="text-xs text-gray-500 font-mono">Agent v2.4 (Llama-3-70b)</span>
+</div>
+<button class="text-gray-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">help</span>
+</button>
+</div>
+</div>
+</aside>
+</main>
+</body></html>
